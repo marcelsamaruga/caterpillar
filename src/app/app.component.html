@@ -1,3 +1,26 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contendId="menu-content">
+    <ion-menu side="start" contendId="menu-content">
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Caterpillar </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle>
+            <ion-item lines="none" routerLink="/student">
+              <ion-icon name="people" slot="start"></ion-icon>Alunos</ion-item
+            >
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+              <ion-item lines="none" routerLink="/student">
+                <ion-icon name="photos" slot="start"></ion-icon>Fotos</ion-item
+              >
+            </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+  </ion-split-pane>
+    <ion-router-outlet id="menu-content"></ion-router-outlet>
 </ion-app>

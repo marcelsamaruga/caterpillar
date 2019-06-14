@@ -1,9 +1,13 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', loadChildren: './home/home.module#HomePageModule' },
+  { path: "", redirectTo: "student", pathMatch: "full" },
+  {
+    path: "student",
+    loadChildren: "./student/student.module#StudentPageModule"
+  },
+  { path: "auth", loadChildren: "./auth/auth/auth.module#AuthPageModule" }
 ];
 
 @NgModule({
@@ -12,4 +16,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
