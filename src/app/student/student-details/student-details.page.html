@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Aluno</ion-title>
+    <ion-buttons color="primary" slot="primary" *ngIf="student" padding>
+      <ion-icon name="trash" (onClick)="onDeleteStudent()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content text-center>
+  <ion-grid>
+    <form (ngSubmit)="onSaveStudent()" [formGroup]="form">
+      <ion-row>
+        <ion-col size-xs="10" offset-xs="1">
+          <ion-item>
+            <ion-label position="floating">Nome</ion-label>
+            <ion-input
+              type="text"
+              required
+              name="firstName"
+              formControlName="firstName"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-xs="10" offset-xs="1">
+          <ion-item>
+            <ion-label position="floating">Sobrenome</ion-label>
+            <ion-input
+              type="text"
+              formControlName="lastName"
+              name="lastName"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-xs="10" offset-xs="1">
+          <ion-item>
+            <ion-label>Nascido em</ion-label>
+            <ion-datetime
+              display-format="DD/MM/YYYY"
+              picker-format="DD MM YYYY"
+              name="birthday"
+              formControlName="birthday"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-xs="10" offset-xs="1">
+          <ion-item>
+            <ion-label position="floating">Contato</ion-label>
+            <ion-input
+              type="text"
+              autocomplete
+              formControlName="contact1"
+              name="contact"
+              required
+              placeholder="(XX) XXXXX-XXXX"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              type="text"
+              formControlName="contact2"
+              name="contact2"
+              placeholder="(XX) XXXXX-XXXX"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-xs="8" offset-xs="2">
+          <ion-button expand="block" type="submit" [disabled]="!form.valid">
+            Salvar
+          </ion-button>
+          <ion-button
+            expand="block"
+            type="button"
+            [routerLink]="['/student/1']"
+          >
+            Move
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
