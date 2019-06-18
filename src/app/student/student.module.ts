@@ -1,6 +1,6 @@
+import { DailyTasksPage } from './daily-tasks/daily-tasks.page';
 import { StudentDetailPage } from './student-detail/student-detail.page';
 import { PhotosPage } from './photos/photos.page';
-import { PhotosRoutingModule } from './photos/photos-routing.module';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
@@ -9,7 +9,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { IonicModule } from "@ionic/angular";
 
 import { StudentPage } from "./student.page";
-import { DailyTasksPage } from './daily-tasks/daily-tasks.page';
 
 const routes: Routes = [
   {
@@ -34,11 +33,11 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        loadChildren: './daily-tasks/daily-tasks.module#DailyTasksModule'
+        loadChildren: './daily-tasks/daily-tasks.module#DailyTasksPageModule'
       },
       {
         path: ":studentId",
-        loadChildren: './photos/photos.module#DailyTasksModule'
+        loadChildren: './daily-tasks/daily-tasks.module#DailyTasksPageModule'
       }
     ]
   },
@@ -46,12 +45,12 @@ const routes: Routes = [
     path: "student-detail",
     children: [
       {
-        path: "",
-        loadChildren: './photos/photos.module#DailyTasksModule'
+        path: "new",
+        loadChildren: './student-detail/student-detail.module#StudentDetailPageModule'
       },
       {
         path: ":studentId",
-        loadChildren: './photos/photos.module#DailyTasksModule'
+        loadChildren: './student-detail/student-detail.module#StudentDetailPageModule'
       }
     ]
   }
@@ -64,6 +63,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [StudentPage, DailyTasksPage, StudentDetailPage]
+  declarations: [StudentPage]
 })
 export class StudentPageModule {}

@@ -7,7 +7,7 @@ const routes: Routes = [
     path: "student",
     loadChildren: "./student/student.module#StudentPageModule"
   },
-  { path: "auth", loadChildren: "./auth/auth/auth.module#AuthPageModule" }
+  { path: "auth", loadChildren: "./auth/auth.module#AuthPageModule" }
 ];
 
 @NgModule({
