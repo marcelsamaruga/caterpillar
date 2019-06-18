@@ -40,5 +40,6 @@ export class StudentService {
   saveStudent(firstName: string, imageUrl: string, contact1: string, lastName?: string, birthday?: Date) {
     const newStudent = new Student( "2", firstName, imageUrl, contact1, lastName, null, birthday );
     this.students.push( newStudent );
+    return newStudent.id;
   }
 }

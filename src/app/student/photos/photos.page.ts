@@ -2,7 +2,6 @@ import { StudentService } from "./../student.service";
 import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { NavController } from "@ionic/angular";
 
 @Component({
   selector: "app-photos",
@@ -10,11 +9,10 @@ import { NavController } from "@ionic/angular";
   styleUrls: ["./photos.page.scss"]
 })
 export class PhotosPage implements OnInit {
-  students: Student[];
+  students: Student[] = [];
 
   constructor(
     private activateRouter: ActivatedRoute,
-    private navController: NavController,
     private studentService: StudentService
   ) {}
 

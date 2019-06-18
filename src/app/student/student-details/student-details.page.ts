@@ -1,5 +1,5 @@
 import { StudentService } from "./../student.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
@@ -39,7 +39,8 @@ export class StudentDetailsPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private studentService: StudentService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -85,7 +86,7 @@ export class StudentDetailsPage implements OnInit {
       birthday: new FormControl( birthday, {
         updateOn: 'blur'
       }),
-      imagemUrl: new FormControl( imageUrl )
+      imageUrl: new FormControl( imageUrl )
     });
 
   }
@@ -101,13 +102,12 @@ export class StudentDetailsPage implements OnInit {
       birthday = new Date(this.form.value["birthday"]);
     }
 
-    this.studentService.saveStudent(
+    let newId = this.studentService.saveStudent(
       this.form.value["firstName"],
       null,
       this.form.value["lastName"],
       birthday
     );
-    console.log(this.studentService.getStudents());
 
     this.toastController
       .create({
@@ -117,6 +117,7 @@ export class StudentDetailsPage implements OnInit {
       })
       .then(toastControllerElement => {
         toastControllerElement.present();
+        this.router.navigateByUrl('/student/student-details/edit/' + newId);
       });
   }
 

@@ -1,6 +1,3 @@
-import { DailyTasksPage } from './daily-tasks/daily-tasks.page';
-import { StudentDetailPage } from './student-detail/student-detail.page';
-import { PhotosPage } from './photos/photos.page';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
@@ -42,15 +39,15 @@ const routes: Routes = [
     ]
   },
   {
-    path: "student-detail",
+    path: "student-details",
     children: [
       {
         path: "new",
-        loadChildren: './student-detail/student-detail.module#StudentDetailPageModule'
+        loadChildren: './student-details/student-details.module#StudentDetailsPageModule'
       },
       {
         path: ":studentId",
-        loadChildren: './student-detail/student-detail.module#StudentDetailPageModule'
+        loadChildren: './student-details/student-details.module#StudentDetailsPageModule'
       }
     ]
   }
