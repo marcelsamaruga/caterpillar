@@ -8,6 +8,7 @@ const routes: Routes = [
     loadChildren: "./student/student.module#StudentPageModule"
   },
   { path: "auth", loadChildren: "./auth/auth.module#AuthPageModule" }
+
 ];
 
 @NgModule({

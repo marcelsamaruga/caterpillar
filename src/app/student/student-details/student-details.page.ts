@@ -117,7 +117,7 @@ export class StudentDetailsPage implements OnInit {
       })
       .then(toastControllerElement => {
         toastControllerElement.present();
-        this.router.navigateByUrl('/student/student-details/edit/' + newId);
+        this.router.navigateByUrl('/student/student-details/' + newId);
       });
   }
 
@@ -126,7 +126,6 @@ export class StudentDetailsPage implements OnInit {
   onImagePicked(imageData: string | File) {
     let imageFile;
     if (typeof imageData === "string") {
-      //this.imageUrlStr = "data:image/jpeg;base64," + imageData;
       try {
         imageFile = base64toBlob(
           imageData.replace("data:image/jpeg;base64,", ""),
@@ -139,5 +138,7 @@ export class StudentDetailsPage implements OnInit {
     } else {
       imageFile = imageData;
     }
+    this.form.patchValue({ imageUrl: imageFile });
   }
+
 }

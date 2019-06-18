@@ -1,32 +1,39 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>Fotos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div *ngFor="let student of students">
+<ion-content no-padding>
+  <div *ngFor="let student of students" no-padding text-center>
     <ion-item *ngIf="!student || !student.images">
       <ion-label>
         <h2>Não há imagens para exibir</h2>
       </ion-label>
     </ion-item>
 
-    <ion-item *ngIf="student">
-      <ion-label no-lines text-center
+    <ion-item *ngIf="student" no-padding>
+      <ion-label text-center
         ><h2>{{ student.firstName + " " + student.lastName }}</h2></ion-label
       >
     </ion-item>
 
-    <ion-item *ngIf="student && student.images" no-padding size-xs="8" offset-xs="2">
-      <ion-slides pager="true" padding>
+    <ion-item
+      *ngIf="student && student.images"
+      no-padding
+    >
+      <ion-slides pager="true" no-padding expand="full">
         <ion-slide *ngFor="let image of student.images">
-          <ion-card>
-            <ion-card-header>
+          <ion-card no-padding>
+            <ion-card-header no-padding>
               <h5>{{ image.date | date }}</h5>
             </ion-card-header>
-            <ion-card-content>
-              <ion-img padding [src]="image.url"></ion-img>
+            <ion-card-content no-padding>
+              <ion-img no-padding [src]="image.url" (click)="onOpenGallery(image.url)"></ion-img>
             </ion-card-content>
           </ion-card>
         </ion-slide>

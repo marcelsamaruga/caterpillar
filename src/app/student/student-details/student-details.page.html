@@ -4,6 +4,9 @@
     <ion-buttons color="primary" slot="primary" *ngIf="student" padding>
       <ion-icon name="trash" (onClick)="onDeleteStudent()"></ion-icon>
     </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -72,6 +75,15 @@
               placeholder="(XX) XXXXX-XXXX"
             ></ion-input>
           </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-xs="10" offset-xs="1">
+          <ion-item position="floating">Foto</ion-item>
+          <app-image-picker
+            (imagePick)="onImagePicked($event)"
+          ></app-image-picker>
         </ion-col>
       </ion-row>
 

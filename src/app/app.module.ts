@@ -13,7 +13,12 @@ import { HttpClientModule } from "@angular/common/http";
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule
+  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -22,3 +27,8 @@ import { HttpClientModule } from "@angular/common/http";
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+// npm install ionic-gallery-modal --save
+// npm install --save @ionic/storage
+// ionic cordova plugin add cordova-plugin-camera
+// npm install @ionic-native/camera
