@@ -1,3 +1,30 @@
-.item-inner {
-    background: #000;
+ion-content {
+  padding: 0;
+  margin: 0;
+
+  div {
+    width: 100%;  
+    padding: 0;
+  }
+
+  ion-item {
+    ion-label {
+      font-weight: bold;
+      letter-spacing: 1px;
+      background-color: #f0f1b3bb;
+      border: 1px solid #d0d17f;
+      border-radius: 25px;
+      padding: 10px 0;
+      margin-top: 10px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      -ms-border-radius: 25px;
+      -o-border-radius: 25px;
+    }
+
+    ion-card, ion-card-header, ion-card-content {
+      padding: 0;
+    }
+    
+  }
 }

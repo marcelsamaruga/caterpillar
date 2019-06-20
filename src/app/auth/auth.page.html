@@ -1,13 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      <img src="assets/img/logo.jpg" />
+    <ion-title text-center>
       <ion-label padding>Caterpillar</ion-label>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div text-center>
+    <img src="assets/img/logo_grande.PNG" />
+  </div>
+
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row>
@@ -17,12 +20,10 @@
               <ion-label position="floating">Email</ion-label>
               <ion-input
                 type="email"
-                placeholder="Email"
                 ngModel
                 name="email"
                 required
                 email
-                value="marcelsamaruga@gmail.com"
                 #emailFormController="ngModel"
               ></ion-input>
             </ion-item>
@@ -38,7 +39,6 @@
               <ion-label position="floating">Password</ion-label>
               <ion-input
                 type="password"
-                placeholder="Password"
                 ngModel
                 name="password"
                 minlength="3"
@@ -61,11 +61,12 @@
           <ion-button
             fill="clear"
             color="primary"
-            (click)="onSwitchMode()"
+            (click)="onSwitchMode(f)"
             expand="block"
             type="button"
           >
-            Switch to {{ isLogin ? "Signup" : "Login" }}
+          {{ !isLogin ? "Login" : "Primeiro Acesso?" }}
+            
           </ion-button>
           <ion-button
             [disabled]="!f.valid"
@@ -73,7 +74,7 @@
             expand="block"
             type="submit"
           >
-            {{ isLogin ? "Login" : "Signup" }}
+            {{ isLogin ? "Login" : "Primeiro Acesso" }}
           </ion-button>
         </ion-col>
       </ion-row>
@@ -85,7 +86,7 @@
             type="button"
             (click)="loginByFacebook()"
           >
-            Login With Facebook
+            Login com Facebook
           </ion-button>
         </ion-col>
       </ion-row>

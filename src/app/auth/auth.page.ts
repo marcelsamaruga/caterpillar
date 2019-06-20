@@ -1,7 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { LoadingController, AlertController } from "@ionic/angular";
+import {
+  LoadingController,
+  AlertController,
+  ToastController
+} from "@ionic/angular";
 import { Observable } from "rxjs";
 
 import { AuthService, AuthResponse } from "./auth.service";
@@ -19,7 +23,8 @@ export class AuthPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {}
@@ -60,8 +65,23 @@ export class AuthPage implements OnInit {
       });
   }
 
-  onSwitchMode() {
+  onSwitchMode(form) {
     this.isLogin = !this.isLogin;
+
+    const email = form.value.email;
+    const password = form.value.password;
+
+    if (email.length === 0 || password.length === 0) {
+      this.toastController
+        .create({
+          duration: 3000,
+          showCloseButton: true,
+          message: "Informe o email e senha"
+        })
+        .then(toastControllerElement => {
+          toastControllerElement.present();
+        });
+    }
   }
 
   onSubmit(form: NgForm) {
@@ -101,7 +121,7 @@ export class AuthPage implements OnInit {
               res.user.email,
               res.user.email,
               res.credential.accessToken,
-              new Date().getTime() + (5 * 24 * 60 * 60)
+              new Date().getTime() + 5 * 24 * 60 * 60
             );
 
             this.router.navigateByUrl("/places/tabs/search");
