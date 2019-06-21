@@ -81,9 +81,10 @@
 
       <ion-row>
         <ion-col size-xs="10" offset-xs="1">
-          <ion-item position="floating">Foto</ion-item>
+          <ion-item position="floating" lines="none">Foto</ion-item>
           <app-image-picker
-            (imagePick)="onImagePicked($event)"
+            (imagePickEmitter)="onImagePicked($event)"
+            [selectedImageInput]="imagePicked"
           ></app-image-picker>
         </ion-col>
       </ion-row>

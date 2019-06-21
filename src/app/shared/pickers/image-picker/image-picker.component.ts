@@ -1,4 +1,3 @@
-import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 import { Platform } from "@ionic/angular";
 import {
   Component,
@@ -6,9 +5,16 @@ import {
   ViewChild,
   EventEmitter,
   ElementRef,
-  Output
+  Output,
+  Input
 } from "@angular/core";
-import { Capacitor } from "@capacitor/core";
+import {
+  Plugins,
+  Capacitor,
+  CameraSource,
+  CameraResultType
+} from "@capacitor/core";
+
 
 @Component({
   selector: "app-image-picker",
@@ -19,16 +25,13 @@ export class ImagePickerComponent implements OnInit {
   @ViewChild("filePicker") filePickerRef: ElementRef<HTMLInputElement>;
   @Output() imagePickEmitter = new EventEmitter<string | File>();
   selectedImage: string;
-  usePicker = false;
+  @Input() selectedImageInput;
 
-  constructor(private platform: Platform, private camera: Camera) {}
+  constructor() {}
 
   ngOnInit() {
-    if (
-      (this.platform.is("mobile") && !this.platform.is("hybrid")) ||
-      this.platform.is("desktop")
-    ) {
-      this.usePicker = true;
+    if (this.selectedImageInput) {
+      this.selectedImage = this.selectedImageInput;
     }
   }
 
@@ -38,28 +41,26 @@ export class ImagePickerComponent implements OnInit {
       return;
     }
 
-    const cameraOptions: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    };
-
-    this.camera
-      .getPicture(cameraOptions)
-        .then(imageData => {
-          this.selectedImage = "data:image/jpeg;base64," + imageData;
-          this.imagePickEmitter.emit(this.selectedImage);
-        })
-        .catch(err => {
-          if (this.usePicker) {
-            this.filePickerRef.nativeElement.click();
-          }
-          return;
-        });
+    Plugins.Camera.getPhoto({
+      quality: 50,
+      resultType: CameraResultType.Base64,
+      height: 320,
+      width: 300,
+      correctOrientation: true,
+      source: CameraSource.Prompt
+    })
+      .then(imageSelected => {
+        this.selectedImage = "data:image/jpeg;base64," + imageSelected;
+        this.imagePickEmitter.emit(btoa(this.selectedImage));
+      })
+      .catch(err => {
+        console.log(err);
+        this.filePickerRef.nativeElement.click();
+        return;
+      });
   }
 
-  onFileChoosen(event: Event) {
+  onFileChosen(event: Event) {
     const pickedFile = (event.target as HTMLInputElement).files[0];
 
     if (!pickedFile) {
@@ -70,9 +71,10 @@ export class ImagePickerComponent implements OnInit {
     fr.onload = () => {
       const imagePath = fr.result.toString();
       this.selectedImage = imagePath;
-      this.imagePickEmitter.emit(imagePath);
+      this.imagePickEmitter.emit(btoa(imagePath));
     };
 
     fr.readAsDataURL(pickedFile);
   }
+
 }

@@ -9,6 +9,11 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
+import { environment } from 'src/environments/environment.prod';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +22,11 @@ import { HttpClientModule } from "@angular/common/http";
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule, 
+    AngularFireStorageModule
   ],
   providers: [
     StatusBar,
@@ -32,3 +41,9 @@ export class AppModule {}
 // npm install --save @ionic/storage
 // ionic cordova plugin add cordova-plugin-camera
 // npm install @ionic-native/camera
+// ionic capacitor add android
+// npm install --save @ionic/pwa-elements
+// npm install -g @angular/cli
+// cordova plugin add cordova-plugin-camera
+// npm i firebase angularfire2 --save
+// npm install @angular/fire firebase --save

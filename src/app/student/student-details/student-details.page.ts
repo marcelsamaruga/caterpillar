@@ -35,6 +35,8 @@ export class StudentDetailsPage implements OnInit {
   form: FormGroup;
   student: Student;
   firstName: string;
+  imagePicked: string;
+  imageBlob: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,42 +55,53 @@ export class StudentDetailsPage implements OnInit {
     });
 
     let firstName = null;
-    let lastName  = null;
-    let contact1  = null;
-    let contact2  = null;
-    let birthday  = null;
-    let imageUrl  = null;
+    let lastName = null;
+    let contact1 = null;
+    let contact2 = null;
+    let birthday = null;
+    let imageUrl = null;
 
-    if ( this.student ) {
+    if (this.student) {
       firstName = this.student.firstName;
       lastName = this.student.lastName;
       contact1 = this.student.contact1;
       contact2 = this.student.contact2;
       imageUrl = this.student.imageUrl;
-      birthday = this.student.birthday.toISOString();
+      //this.imagePicked = this.student.imageUrl;
+
+      const fr = new FileReader();
+      fr.onload = () => {
+        const imagePath = fr.result.toString();
+        this.imagePicked = imagePath;
+      };
+
+      fr.readAsBinaryString(imageUrl);
+
+      if (this.student.birthday) {
+        birthday = this.student.birthday.toISOString();
+      }
     }
 
     this.form = new FormGroup({
-      firstName: new FormControl( firstName, {
-        updateOn: 'blur',
+      firstName: new FormControl(firstName, {
+        updateOn: "blur",
         validators: [Validators.required]
       }),
-      lastName: new FormControl( lastName, {
-        updateOn: 'blur'
+      lastName: new FormControl(lastName, {
+        updateOn: "blur"
       }),
-      contact1: new FormControl( contact1, {
-        updateOn: 'blur',
+      contact1: new FormControl(contact1, {
+        updateOn: "blur",
         validators: [Validators.required]
       }),
-      contact2: new FormControl( contact2, {
-        updateOn: 'blur'
+      contact2: new FormControl(contact2, {
+        updateOn: "blur"
       }),
-      birthday: new FormControl( birthday, {
-        updateOn: 'blur'
+      birthday: new FormControl(birthday, {
+        updateOn: "blur"
       }),
-      imageUrl: new FormControl( imageUrl )
+      imageUrl: new FormControl(imageUrl)
     });
-
   }
 
   onSaveStudent() {
@@ -102,11 +115,13 @@ export class StudentDetailsPage implements OnInit {
       birthday = new Date(this.form.value["birthday"]);
     }
 
-    let newId = this.studentService.saveStudent(
+    this.studentService.saveStudent(
       this.form.value["firstName"],
-      null,
+      this.imageBlob,
+      this.form.value['contact1'],
       this.form.value["lastName"],
-      birthday
+      birthday,
+      this.form.value['contact2'],
     );
 
     this.toastController
@@ -117,15 +132,16 @@ export class StudentDetailsPage implements OnInit {
       })
       .then(toastControllerElement => {
         toastControllerElement.present();
-        this.router.navigateByUrl('/student/student-details/' + newId);
+        this.router.navigateByUrl("/student");
       });
   }
 
   onDeleteStudent() {}
 
   onImagePicked(imageData: string | File) {
-    let imageFile;
+    /*let imageFile;
     if (typeof imageData === "string") {
+      console.log('a');
       try {
         imageFile = base64toBlob(
           imageData.replace("data:image/jpeg;base64,", ""),
@@ -136,9 +152,19 @@ export class StudentDetailsPage implements OnInit {
         return;
       }
     } else {
+      console.log('aj');
       imageFile = imageData;
     }
-    this.form.patchValue({ imageUrl: imageFile });
-  }
+    this.form.patchValue({ imageUrl: imageFile });*/
+    let imageFile;
 
+    if (typeof imageData === "string") {
+      //this.imagePicked = imageData;
+      imageFile = base64toBlob(
+        imageData.replace("data:image/jpeg;base64,", ""),
+        "image/jpeg"
+      );
+      this.imageBlob = imageFile;
+    }
+  }
 }
