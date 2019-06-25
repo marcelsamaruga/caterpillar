@@ -1,3 +1,4 @@
+import { Photo } from './photos/photo.model';
 import { Injectable, OnInit } from "@angular/core";
 import { Student } from "./student.model";
 import {
@@ -14,7 +15,7 @@ export class StudentService implements OnInit {
 
   constructor(private db: AngularFirestore) {
     this.dbStudentCollection = db.collection<Student>("students");
-    /*this.students = [
+    this.students = [
       new Student(
         "1",
         "Ben",
@@ -51,31 +52,21 @@ export class StudentService implements OnInit {
         ],
         new Date("2014-12-24")
       )
-    ];*/
+    ];
   }
 
   ngOnInit() {
-    this.db
-      .collection("students")
-      .stateChanges()
-      .subscribe(snapshots => {
-        this.students = snapshots.map(studentSnapshot => {
-          return <Student>{
-            id: studentSnapshot.payload.doc.id,
-            ...studentSnapshot.payload.doc.data
-          };
-        });
-      });
+    
   }
 
   getStudents() {
-    this.db.collection("students", ref => ref.orderBy("firstName"));
+    //this.db.collection("students", ref => ref.orderBy("firstName"));
     return this.students;
   }
 
   getStudentById(studentId: string): Student {
     let studentReturned = this.students.filter(student => {
-      return student.id === studentId;
+      return student;
     });
 
     return studentReturned[0];
@@ -85,9 +76,9 @@ export class StudentService implements OnInit {
     firstName: string,
     imageUrl: any,
     contact1: string,
+    contact2: string,
     lastName?: string,
-    birthday?: Date,
-    contact2: string
+    birthday?: Date
   ) {
     const newStudent = new Student(
       firstName,
@@ -95,8 +86,7 @@ export class StudentService implements OnInit {
       contact1,
       lastName,
       null,
-      birthday,
-      contact2
+      null
     );
 
     //await this.dbStudentCollection.add(newStudent);
