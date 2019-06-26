@@ -53,5 +53,6 @@ export class StudentService {
         .set( student ) );*/
       return from(this.db.collection('students').add(student));
     }
+
   }
 }

@@ -35,6 +35,10 @@ const routes: Routes = [
       {
         path: ":studentId",
         loadChildren: './daily-tasks/daily-tasks.module#DailyTasksPageModule'
+      },
+      {
+        path: ":studentId/:dateTime",
+        loadChildren: './daily-tasks/daily-tasks-detail/daily-tasks-detail.module#DailyTasksDetailPageModule'
       }
     ]
   },
