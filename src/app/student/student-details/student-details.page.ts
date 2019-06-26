@@ -48,9 +48,9 @@ export class StudentDetailsPage implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramsMap => {
       if (paramsMap.has("studentId")) {
-        this.student = this.studentService.getStudentById(
-          paramsMap.get("studentId")
-        );
+        this.studentService
+          .getStudentById(paramsMap.get("studentId"))
+          .subscribe(student => (this.student = student));
       }
     });
 
@@ -88,7 +88,8 @@ export class StudentDetailsPage implements OnInit {
         validators: [Validators.required]
       }),
       lastName: new FormControl(lastName, {
-        updateOn: "blur"
+        updateOn: "blur",
+        validators: [Validators.required]
       }),
       contact1: new FormControl(contact1, {
         updateOn: "blur",
@@ -109,31 +110,35 @@ export class StudentDetailsPage implements OnInit {
       return;
     }
 
-    let birthday = null;
+    let birthdayDate = null;
 
     if (this.form.value["birthday"]) {
-      birthday = new Date(this.form.value["birthday"]);
+      birthdayDate = new Date(this.form.value["birthday"]);
     }
 
-    this.studentService.saveStudent(
-      this.form.value["firstName"],
-      this.imageBlob,
-      this.form.value['contact1'],
-      this.form.value["lastName"],
-      birthday,
-      this.form.value['contact2'],
-    );
+    const newStudent = {
+      id: this.student && this.student.id ? this.student.id : undefined,
+      firstName: this.form.value["firstName"],
+      //imageUrl: this.imageBlob,
+      contact1: this.form.value["contact1"],
+      lastName: this.form.value["lastName"],
+      birthday: birthdayDate,
+      contact2: this.form.value["contact2"]
+    };
 
-    this.toastController
-      .create({
-        message: "Registro salvo",
-        showCloseButton: true,
-        duration: 1800
-      })
-      .then(toastControllerElement => {
-        toastControllerElement.present();
-        this.router.navigateByUrl("/student");
-      });
+    this.studentService.saveStudent(newStudent).subscribe(student => {
+      console.log(student);
+      this.toastController
+        .create({
+          message: "Registro salvo",
+          showCloseButton: true,
+          duration: 1800
+        })
+        .then(toastControllerElement => {
+          toastControllerElement.present();
+          this.router.navigateByUrl("/student");
+        });
+    });
   }
 
   onDeleteStudent() {}

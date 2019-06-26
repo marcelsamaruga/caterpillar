@@ -22,7 +22,7 @@
         <ion-avatar item-start>
           <ion-img [src]="student.imageUrl" *ngIf="student.imageUrl"></ion-img>
         </ion-avatar>
-        <ion-label padding>
+        <ion-label padding [routerLink]='["/", "student", "student-details", student.id]'>
           <h2>{{ student.firstName }}</h2>
           <p>{{ student.firstName + " " + student.lastName }}</p>
         </ion-label>
