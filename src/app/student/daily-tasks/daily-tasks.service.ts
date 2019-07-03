@@ -9,8 +9,8 @@ import { Task } from "./model/tasks.model";
   providedIn: "root"
 })
 export class DailyTasksService implements OnInit {
-  tasks: Task[];
-  student: Student[];
+  tasks: Task[] = [];
+  student: Student[] = [];
 
   constructor(private studentService: StudentService) {}
 
@@ -36,9 +36,14 @@ export class DailyTasksService implements OnInit {
     return this.tasks;
   }
 
-  getTasksByStudent(studentId: string) {
-    return this.tasks.filter( task => {
-      return task.student.id === studentId;
-    } );
+  getTasksByStudent(studentId: string): Task[] {
+    const studentTasks = [];
+    this.tasks.filter( task => {
+      if (task.student.id === studentId) {
+        studentTasks.push(task);
+      }
+    });
+
+    return studentTasks;
   }
 }

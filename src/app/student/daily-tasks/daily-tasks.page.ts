@@ -31,6 +31,7 @@ export class DailyTasksPage implements OnInit {
         this.students = this.studentService.getStudents();
         this.students.forEach( student => {
           student.tasks = this.taskService.getTasksByStudent(student.id);
+          console.log(student);
         } );
         this.showAll = true;
       }
@@ -42,6 +43,6 @@ export class DailyTasksPage implements OnInit {
   }
 
   onShowAll() {
-    
+
   }
 }

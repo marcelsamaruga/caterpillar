@@ -18,22 +18,30 @@
 
     <ion-item *ngIf="student">
       <ion-label text-center
-        ><h2>{{ student.firstName + " " + student.lastName }}</h2></ion-label
+        ><h2>{{ student.firstName + " " + student.lastName }}
+          <ion-badge *ngIf="student.images && student.images.length > 0">{{ student.images.length }}</ion-badge>
+        </h2>
+        </ion-label
       >
     </ion-item>
 
     <ion-item
       *ngIf="student && student.images"
     >
-      <ion-slides pager="true" expand="full">
+      <ion-slides [options]="sliderConfig">
+        
         <ion-slide *ngFor="let image of student.images">
           <ion-card>
-            <ion-card-content>
-              <ion-img [src]="image.url" (click)="onOpenGallery(image.url)"></ion-img>
-            </ion-card-content>
+            <ion-card-header>
+              <ion-card-content>
+                <ion-img [src]="image.url" (click)="onOpenGallery(image.url)" tappable></ion-img>
+              </ion-card-content>
+            </ion-card-header>
           </ion-card>
+
         </ion-slide>
       </ion-slides>
     </ion-item>
+
   </div>
 </ion-content>

@@ -65,7 +65,7 @@ export class StudentService implements OnInit {
   }
 
   getStudentById(studentId: string): Student {
-    let studentReturned = this.students.filter(student => {
+    const studentReturned = this.students.filter(student => {
       return student;
     });
 

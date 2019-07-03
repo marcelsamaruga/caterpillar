@@ -1,14 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <img slot="start" class="menu-background" src="../../../assets/img/menu_background.jpg" />
-    <ion-title>Minhas tarefas</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <img slot="start" class="menu-background" src="../../../assets/img/menu_background.jpg" />
+    <ion-title>Minhas tarefas</ion-title>
     <ion-buttons color="primary" slot="primary" padding>
         <ion-icon name="search" (onClick)="searchTask()"></ion-icon>
       </ion-buttons>
-      
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +18,7 @@
   <ion-list size-xs="8" offset-xs="2">
     <ion-item-group *ngFor="let student of students">
       <ion-item-divider>
-        <ion-label>{{ student.firstName + ' ' + student.lastName?.toString }}</ion-label>
+        <ion-label>{{ student.firstName + ' ' + (student.lastName ? student.lastName : '') }}</ion-label>
     </ion-item-divider>
 
     <ion-item *ngFor="let task of student.tasks">

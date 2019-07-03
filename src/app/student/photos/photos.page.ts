@@ -13,6 +13,16 @@ import { ModalController } from "@ionic/angular";
 export class PhotosPage implements OnInit {
   students: Student[] = [];
 
+  sliderConfig = {
+    slidesPerView: 1.3,
+    spaceBetween: 7,
+    centeredSlides: false,
+    slideShadows: true,
+    watchSlidesProgress: true,
+    initialSlide: 1,
+    speed: 400
+  }
+
   constructor(
     private activateRouter: ActivatedRoute,
     private studentService: StudentService,
