@@ -6,3 +6,10 @@ export function convertDBSnapshots<T>( snapshots ) {
         };
     } )
 }
+
+export function convertDBSnapshotsByOne<T>( snapshot ) {
+    return <T> {
+            id: snapshot.payload.id,
+            ... snapshot.payload.data()
+        };
+}

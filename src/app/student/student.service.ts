@@ -6,7 +6,7 @@ import {
 } from '@angular/fire/firestore';
 import { map, first } from 'rxjs/operators';
 import { Observable, from } from 'rxjs';
-import { convertDBSnapshots } from '../shared/utils';
+import { convertDBSnapshots, convertDBSnapshotsByOne } from '../shared/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -33,12 +33,12 @@ export class StudentService {
 
   getStudentById(studentId: string): Observable<Student> {
     return this.db
-      .collection('students', ref => ref.where('id', '==', studentId))
+      .doc('students/' + studentId)
       .snapshotChanges()
       .pipe(
         map(snapshots => {
-          const students = convertDBSnapshots<Student>(snapshots);
-          return students.length === 1 ? students[0] : undefined;
+          const student = convertDBSnapshotsByOne<Student>(snapshots);
+          return student;
         }),
         first()
       );

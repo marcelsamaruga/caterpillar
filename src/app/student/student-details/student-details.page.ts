@@ -127,7 +127,6 @@ export class StudentDetailsPage implements OnInit {
     };
 
     this.studentService.saveStudent(newStudent).subscribe(student => {
-      console.log(student);
       this.toastController
         .create({
           message: "Registro salvo",
