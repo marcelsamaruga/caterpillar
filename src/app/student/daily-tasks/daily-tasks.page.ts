@@ -28,11 +28,14 @@ export class DailyTasksPage implements OnInit {
           paramMap.get("studentId")
         );
       } else {
-        this.students = this.studentService.getStudents();
-        this.students.forEach( student => {
-          student.tasks = this.taskService.getTasksByStudent(student.id);
-          console.log(student);
-        } );
+        this.studentService.getStudents().subscribe(
+          students => {
+            this.students = students;
+            this.students.forEach( student => {
+              student.tasks = this.taskService.getTasksByStudent(student.id);
+            } );
+          }
+        );
         this.showAll = true;
       }
     });

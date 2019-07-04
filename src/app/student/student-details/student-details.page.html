@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <img slot="start" class="menu-background" src="../../../assets/img/menu_background.jpg" />
     <ion-title>Aluno</ion-title>
     <ion-buttons color="primary" slot="primary" *ngIf="student" padding>
       <ion-icon name="trash" (onClick)="onDeleteStudent()"></ion-icon>
-    </ion-buttons>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

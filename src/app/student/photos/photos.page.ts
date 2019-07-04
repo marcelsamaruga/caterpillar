@@ -1,4 +1,4 @@
-import { PhotoModalPage } from './photo-modal/photo-modal.page';
+import { PhotoModalPage } from "./photo-modal/photo-modal.page";
 import { StudentService } from "./../student.service";
 import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
@@ -32,11 +32,13 @@ export class PhotosPage implements OnInit {
   ngOnInit() {
     this.activateRouter.paramMap.subscribe(params => {
       if (params.has("studentId")) {
-        this.students.push(
-          this.studentService.getStudentById(params.get("studentId"))
-        );
+        this.studentService
+          .getStudentById(params.get("studentId"))
+          .subscribe(student => this.students.push(student));
       } else {
-        this.students = this.studentService.getStudents();
+        this.studentService
+          .getStudents()
+          .subscribe(students => this.students = students);
       }
     });
   }

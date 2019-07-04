@@ -37,8 +37,25 @@ const routes: Routes = [
         loadChildren: './daily-tasks/daily-tasks.module#DailyTasksPageModule'
       },
       {
-        path: ":studentId/:dateTime",
+        path: ":studentId/:taskDate",
         loadChildren: './daily-tasks/daily-tasks-detail/daily-tasks-detail.module#DailyTasksDetailPageModule'
+      },
+      {
+        path: ":studentId/new",
+        loadChildren: './daily-tasks/daily-tasks-detail/daily-tasks-detail.module#DailyTasksDetailPageModule'
+      }
+    ]
+  },
+  { 
+    path: 'daily-tasks-detail',
+    children: [
+      {
+        path: ':studentId/new',
+        loadChildren: './student/daily-tasks/daily-tasks-detail/daily-tasks-detail.module#DailyTasksDetailPageModule' 
+      },
+      {
+        path: ':studentId/:taskDate',
+        loadChildren: './student/daily-tasks/daily-tasks-detail/daily-tasks-detail.module#DailyTasksDetailPageModule' 
       }
     ]
   },

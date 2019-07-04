@@ -1,102 +1,60 @@
-import { Photo } from './photos/photo.model';
-import { Injectable, OnInit } from "@angular/core";
-import { Student } from "./student.model";
+import { Injectable, OnInit } from '@angular/core';
+import { Student } from './student.model';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from "@angular/fire/firestore";
+} from '@angular/fire/firestore';
+import { map, first } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { convertDBSnapshots, convertDBSnapshotsByOne } from '../shared/utils';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class StudentService implements OnInit {
+export class StudentService {
   students: Student[] = [];
   dbStudentCollection: AngularFirestoreCollection;
 
   constructor(private db: AngularFirestore) {
-    this.dbStudentCollection = db.collection<Student>("students");
-    this.students = [
-      new Student(
-        "1",
-        "Ben",
-        "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-        "41 99999-7777",
-        "Costa",
-        [
-          new Photo(
-            "https://avante.biz/wp-content/uploads/Wallpaper-Of-Baby/Wallpaper-Of-Baby-051.jpg",
-            new Date("2019-01-05")
-          ),
-          new Photo(
-            "https://rukminim1.flixcart.com/image/704/704/j8esr680/poster/4/a/b/large-poster-cute-baby-poster-babies-poster-collection-of-cute-original-imaeyfswfajgdgbh.jpeg?q=70",
-            new Date("2019-07-11")
-          )
-        ],
-        new Date("2014-12-24")
-      ),
-      new Student(
-        "2",
-        "Ben",
-        "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-        "41 99999-7777",
-        "Costa",
-        [
-          new Photo(
-            "https://avante.biz/wp-content/uploads/Wallpaper-Of-Baby/Wallpaper-Of-Baby-051.jpg",
-            new Date("2019-01-05")
-          ),
-          new Photo(
-            "https://rukminim1.flixcart.com/image/704/704/j8esr680/poster/4/a/b/large-poster-cute-baby-poster-babies-poster-collection-of-cute-original-imaeyfswfajgdgbh.jpeg?q=70",
-            new Date("2019-07-11")
-          )
-        ],
-        new Date("2014-12-24")
-      )
-    ];
+    this.dbStudentCollection = db.collection<Student>('students');
   }
 
-  ngOnInit() {
-    
+  getStudents(): Observable<Student[]> {
+    return this.db
+      .collection('students', ref => ref.orderBy('firstName'))
+      .snapshotChanges()
+      .pipe(
+        map(snapshots => {
+          return convertDBSnapshots<Student>(snapshots);
+        }),
+        first()
+      );
   }
 
-  getStudents() {
-    //this.db.collection("students", ref => ref.orderBy("firstName"));
-    return this.students;
+  getStudentById(studentId: string): Observable<Student> {
+    return this.db
+      .doc('students/' + studentId)
+      .snapshotChanges()
+      .pipe(
+        map(snapshots => {
+          const student = convertDBSnapshotsByOne<Student>(snapshots);
+          return student;
+        }),
+        first()
+      );
   }
 
-  getStudentById(studentId: string): Student {
-    const studentReturned = this.students.filter(student => {
-      return student;
-    });
 
-    return studentReturned[0];
-  }
+  saveStudent(student: Partial<Student>): Observable<any> {
+    if (student.id && student.id !== '') {
+      return from(this.db.doc('students/' + student.id).update(student));
+    } else {
+      console.log(student);
+      /*return from( this.db.doc('students')
+        .set( student ) );*/
+      return from(this.db.collection('students').add(student));
+    }
 
-  async saveStudent(
-    firstName: string,
-    imageUrl: any,
-    contact1: string,
-    contact2: string,
-    lastName?: string,
-    birthday?: Date
-  ) {
-    const newStudent = new Student(
-      firstName,
-      imageUrl,
-      contact1,
-      lastName,
-      null,
-      null
-    );
 
-    //await this.dbStudentCollection.add(newStudent);
-    //return newId;
-    await this.db
-          .collection("students")
-          .add( {
-            firstName: firstName,
-            contact1: contact1,
-            imageUrl: imageUrl
-          });
   }
 }

@@ -1,6 +1,7 @@
 import { Student } from "../../student.model";
 import { DiaperChange } from "../model/diaper-change.model";
 import { BreastFeed } from './breastfeed.model';
+import { Meal } from './meal.model';
 export class Task {
   constructor(
     public id: string,
@@ -9,6 +10,7 @@ export class Task {
     public diaperChange: DiaperChange[] = [],
     public breastFeed: BreastFeed[] = [],
     public sunBath: boolean = false,
-    public gym: boolean = false
+    public gym: boolean = false,
+    public meal: Meal[]
   ) {}
 }
