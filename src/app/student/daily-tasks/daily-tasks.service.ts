@@ -36,7 +36,7 @@ export class DailyTasksService implements OnInit {
             [ 
               new Meal( "1", MealType.Breakfast, FoodQuantity.Few ),
               new Meal( "2", MealType.Lunch, FoodQuantity.Havent ),
-              new Meal( "3", MealType.Dinner, FoodQuantity.Good ),
+              new Meal( "3", MealType.Snack, FoodQuantity.Good ),
               new Meal( "4", MealType.Soup, FoodQuantity.Good )
              ]
           )

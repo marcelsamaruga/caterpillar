@@ -48,4 +48,8 @@ export class DailyTasksPage implements OnInit {
   onShowAll() {
 
   }
+
+  getToday(): string {
+    return new Date().toISOString().substring(0, 10);
+  }
 }

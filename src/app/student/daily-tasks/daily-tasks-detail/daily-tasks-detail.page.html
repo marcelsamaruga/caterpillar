@@ -57,52 +57,31 @@
       <div *ngIf="!task || !task.meal">
         <ion-row>
           <ion-col size-xs="12">
-            <ion-item lines="none" class="bold">
-              Café da manhã:
-            </ion-item>
-            <ion-item>
-              <ion-label>( ) bem</ion-label>
-              <ion-label>( ) pouco</ion-label>
-              <ion-label>( ) não comi</ion-label>
-            </ion-item>
+            <ion-col size-xs="12">
+              <app-meals title="Café da manhã" description="Teste"></app-meals>
+            </ion-col>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size-xs="12">
-            <ion-item lines="none" class="bold"> Almoço:</ion-item>
-            <ion-item>
-              <ion-label>( ) bem</ion-label>
-              <ion-label>( ) pouco</ion-label>
-              <ion-label>( ) não comi</ion-label>
-            </ion-item>
+            <ion-col size-xs="12">
+              <app-meals title="Almoço"></app-meals>
+            </ion-col>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size-xs="12">
-            <ion-item class="bold" lines="none">
-              Lanche:
-            </ion-item>
-            <ion-item>
-              <ion-radio></ion-radio>
-              <ion-label>bem</ion-label>
-              <ion-radio></ion-radio>
-              <ion-label>pouco</ion-label>
-              <ion-radio></ion-radio>
-              <ion-label>não comi</ion-label>
-            </ion-item>
+            <app-meals title="Lanche"></app-meals>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size-xs="12">
-            <ion-item class="bold" lines="none">Sopa:</ion-item>
-            <ion-item>
-              <ion-label>( ) bem</ion-label>
-              <ion-label>( ) pouco</ion-label>
-              <ion-label>( ) não comi</ion-label>
-            </ion-item>
+            <ion-col size-xs="12">
+              <app-meals title="Sopa"></app-meals>
+            </ion-col>
           </ion-col>
         </ion-row>
       </div>
@@ -132,5 +111,22 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="alarm"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list>
+        <ion-fab-button color="light">
+          <ion-icon name="restaurant"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light">
+          <ion-icon name="battery-charging"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light">
+          <ion-icon name="clock"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
   </form>
 </ion-content>

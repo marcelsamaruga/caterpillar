@@ -1,15 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <img
-      slot="start"
-      class="menu-background"
-      src="../../../assets/img/menu_background.jpg"
-    />
-    <ion-title>Minhas tarefas</ion-title>
-
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
@@ -48,7 +38,7 @@
         <button
           ion-button
           color="primary"
-          [routerLink]="['/student/daily-tasks-detail/' + student.id + '/new']"
+          [routerLink]="['/', 'student', 'daily-tasks-detail', student.id, getToday()]"
         >
           <ion-icon name="calendar"></ion-icon>
           Hoje

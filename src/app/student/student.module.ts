@@ -51,11 +51,11 @@ const routes: Routes = [
     children: [
       {
         path: ':studentId/new',
-        loadChildren: './student/daily-tasks/daily-tasks-detail/daily-tasks-detail.module#DailyTasksDetailPageModule' 
+        loadChildren: './daily-tasks/daily-tasks-detail/daily-tasks-detail.module#DailyTasksDetailPageModule' 
       },
       {
         path: ':studentId/:taskDate',
-        loadChildren: './student/daily-tasks/daily-tasks-detail/daily-tasks-detail.module#DailyTasksDetailPageModule' 
+        loadChildren: './daily-tasks/daily-tasks-detail/daily-tasks-detail.module#DailyTasksDetailPageModule' 
       }
     ]
   },

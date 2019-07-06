@@ -1,9 +1,7 @@
 import { Task } from "./../model/tasks.model";
 import { DailyTasksService } from "./../daily-tasks.service";
-import { FormControl, Validators } from "@angular/forms";
-import { FormGroup } from "@angular/forms";
 import { StudentService } from "./../../student.service";
-import { Student } from "./../../student.model";
+import { Student } from "../../student.model";
 import { Router } from "@angular/router";
 import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";

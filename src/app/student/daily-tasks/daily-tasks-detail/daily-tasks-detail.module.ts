@@ -1,3 +1,4 @@
+import { MealsComponent } from './meals/meals.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +23,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DailyTasksDetailPage]
+  declarations: [DailyTasksDetailPage, MealsComponent]
 })
 export class DailyTasksDetailPageModule {}
