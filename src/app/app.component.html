@@ -28,6 +28,12 @@
               <ion-label>Tarefas</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle *ngIf="isLoggedIn$ | async">
+            <ion-item lines="none" (click)="logout()">
+              <ion-icon name="log-out" slot="start"></ion-icon>
+              <ion-label>Sair</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
         </ion-list>
       </ion-content>
     </ion-menu>

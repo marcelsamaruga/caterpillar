@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title text-center>
-      <ion-label padding>Caterpillar</ion-label>
+      <ion-label padding>Caterpillar - Creche e Berçário</ion-label>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,85 +11,10 @@
     <img src="assets/img/logo_grande.PNG" />
   </div>
 
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <ion-grid>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-list>
-            <ion-item>
-              <ion-label position="floating">Email</ion-label>
-              <ion-input
-                type="email"
-                ngModel
-                name="email"
-                required
-                email
-                #emailFormController="ngModel"
-              ></ion-input>
-            </ion-item>
+  <hr />
 
-            <ion-item
-              lines="none"
-              *ngIf="!emailFormController.valid && emailFormController.touched"
-            >
-              <p>Please inform a valid email</p>
-            </ion-item>
+  <div id="firebaseui-auth-div" class="auth-container">
 
-            <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input
-                type="password"
-                ngModel
-                name="password"
-                minlength="3"
-                required
-                #passwordFormController="ngModel"
-              ></ion-input>
-            </ion-item>
-            <ion-item
-              *ngIf="
-                !passwordFormController.valid && passwordFormController.touched
-              "
-            >
-              <p>Please inform minimum of 3 characters</p>
-            </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-button
-            fill="clear"
-            color="primary"
-            (click)="onSwitchMode(f)"
-            expand="block"
-            type="button"
-          >
-          {{ !isLogin ? "Login" : "Primeiro Acesso?" }}
-            
-          </ion-button>
-          <ion-button
-            [disabled]="!f.valid"
-            color="primary"
-            expand="block"
-            type="submit"
-          >
-            {{ isLogin ? "Login" : "Primeiro Acesso" }}
-          </ion-button>
-        </ion-col>
-      </ion-row>
-      <ion-row padding>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-button
-            color="primary"
-            expand="block"
-            type="button"
-            (click)="loginByFacebook()"
-          >
-            Login com Facebook
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
+  </div>
+
 </ion-content>

@@ -47,3 +47,5 @@ export class AppModule {}
 // cordova plugin add cordova-plugin-camera
 // npm i firebase angularfire2 --save
 // npm install @angular/fire firebase --save
+// ionic cordova prepare
+// npm install firebaseui --save
