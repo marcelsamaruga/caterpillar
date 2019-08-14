@@ -17,6 +17,11 @@ export class DailyTasksDetailPage implements OnInit {
   taskDate: string = new Date().toISOString().substring(0, 10);
   task: Task;
 
+  // controls
+  showMeals = false;
+  showSleeping = false;
+  showDiapers = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -46,5 +51,12 @@ export class DailyTasksDetailPage implements OnInit {
         );
       });
     });
+  }
+
+  onChangeSegment(event) {
+    console.log(event);
+    this.showMeals = event.detail.value === 'meals';
+    this.showSleeping = event.detail.value === 'sleeping';
+    this.showDiapers = event.detail.value === 'diapers';
   }
 }

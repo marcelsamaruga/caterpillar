@@ -24,6 +24,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
+
       <ion-row>
         <ion-col size-xs="12">
           <ion-item>
@@ -32,6 +33,30 @@
           </ion-item>
         </ion-col>
       </ion-row>
+
+      <ion-row>
+        <ion-col size-xs="12">
+          <ion-segment (ionChange)="onChangeSegment($event)">
+            <ion-segment-button value="meals" checked>
+              <ion-icon name="restaurant"></ion-icon>
+              <ion-label>Refeições</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="diapers">
+              <ion-icon name="body"></ion-icon>
+              <ion-label>Hora da fralda</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="sleeping">
+              <ion-icon name="bed"></ion-icon>
+              <ion-label>Hora do Sono</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="sleeping">
+              <ion-icon name="bed"></ion-icon>
+              <ion-label>Atividades</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+
       <div *ngIf="task && task.meal">
         <ion-row *ngFor="let meal of task.meal">
           <ion-col size-xs="12">
@@ -54,11 +79,11 @@
         </ion-row>
       </div>
 
-      <div *ngIf="!task || !task.meal">
+      <div *ngIf="(!task || !task.meal) && showMeals">
         <ion-row>
           <ion-col size-xs="12">
             <ion-col size-xs="12">
-              <app-meals title="Café da manhã" description="Teste"></app-meals>
+              <app-meals title="Café da manhã"></app-meals>
             </ion-col>
           </ion-col>
         </ion-row>
@@ -86,7 +111,7 @@
         </ion-row>
       </div>
 
-      <ion-row>
+      <ion-row *ngIf="showSleeping">
         <ion-col size-xs="12">
           <ion-label class="bold">
             Hoje eu fui dormir das:
@@ -101,15 +126,6 @@
           </ion-label>
         </ion-col>
       </ion-row>
-
-      <ion-row>
-        <ion-col size-xs="12">
-          <ion-item>
-            <ion-label>Checkbox</ion-label>
-            <ion-checkbox slot="start"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-      </ion-row>
     </ion-grid>
 
     <ion-fab vertical="top" horizontal="end" edge slot="fixed">
@@ -117,14 +133,14 @@
         <ion-icon name="alarm"></ion-icon>
       </ion-fab-button>
       <ion-fab-list>
-        <ion-fab-button color="light">
+        <ion-fab-button color="secondary">
           <ion-icon name="restaurant"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="light">
-          <ion-icon name="battery-charging"></ion-icon>
+        <ion-fab-button color="secondary">
+          <ion-icon name="bed"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="light">
-          <ion-icon name="clock"></ion-icon>
+        <ion-fab-button color="secondary">
+          <ion-icon name="bed"></ion-icon>
         </ion-fab-button>
       </ion-fab-list>
     </ion-fab>

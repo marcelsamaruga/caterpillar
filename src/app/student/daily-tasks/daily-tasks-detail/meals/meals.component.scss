@@ -1,5 +1,19 @@
 ion-item {
     height: 36px;
+    ion-label {
+        margin-left: 5px;
+    }
+}
+
+div.item-native {
+    padding: 0;
+}
+
+ion-grid {
+    padding: 0;
+    ion-col {
+        padding: 0;
+    }
 }
 
 .bold {
