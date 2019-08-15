@@ -10,10 +10,14 @@ div.item-native {
 }
 
 ion-grid {
-    padding: 0;
-    ion-col {
-        padding: 0;
-    }
+    margin-top: -10px;
+    ion-row{
+        height: 35px;
+    } 
+}
+
+h6 {
+    margin-bottom:0;
 }
 
 .bold {

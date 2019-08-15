@@ -12,33 +12,55 @@
     <ion-buttons color="primary" slot="primary" padding>
       <ion-icon name="search" (onClick)="searchTask()"></ion-icon>
     </ion-buttons>
+    <ion-avatar
+      class="avatar_profile"
+      slot="primary"
+      *ngIf="userPhoto$ | async as userPhoto"
+    >
+      <img [src]="userPhoto" />
+    </ion-avatar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list size-xs="8" offset-xs="2">
-    <ion-item-sliding *ngFor="let student of students" detail>
+    <ion-item-sliding *ngFor="let student of students$ | async">
       <ion-item>
-        <ion-item-group>
-          <ion-item-divider>
-            <ion-label>{{
-              student.firstName + " " + student.lastName
-            }}</ion-label>
-          </ion-item-divider>
+        <ion-avatar item-start>
+          <ion-img [src]="student.imageUrl" *ngIf="student.imageUrl"></ion-img>
+        </ion-avatar>
+        <ion-label
+          padding
+          [routerLink]="[
+            '/',
+            'student',
+            'daily-tasks-detail',
+            student.id,
+            getToday()
+          ]"
+        >
+          <h2>{{ student.firstName + " " + student.lastName }}</h2>
+          <p>{{ getToday() | date }}</p>
 
           <ion-item *ngFor="let task of student.tasks">
             <ion-label>
               {{ task.date | date }}
             </ion-label>
           </ion-item>
-        </ion-item-group>
+        </ion-label>
       </ion-item>
 
       <ion-item-options side="end">
         <button
           ion-button
           color="primary"
-          [routerLink]="['/', 'student', 'daily-tasks-detail', student.id, getToday()]"
+          [routerLink]="[
+            '/',
+            'student',
+            'daily-tasks-detail',
+            student.id,
+            getToday()
+          ]"
         >
           <ion-icon name="calendar"></ion-icon>
           Hoje
@@ -47,7 +69,7 @@
     </ion-item-sliding>
   </ion-list>
 
-  <ion-button fill="clear" color="primary" (click)="onShowAll()">
-    Todos
+  <ion-button fill="clear" color="primary" (click)="onShowDailyFilterModal()">
+    Filtrar por data
   </ion-button>
 </ion-content>

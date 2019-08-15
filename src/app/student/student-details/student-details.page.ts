@@ -1,9 +1,11 @@
+import { AuthService } from './../../auth/auth.service';
 import { StudentService } from "./../student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastController } from "@ionic/angular";
+import { Observable } from 'rxjs';
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || "";
@@ -38,11 +40,14 @@ export class StudentDetailsPage implements OnInit {
   imagePicked: string;
   imageBlob: any;
 
+  userPhoto$: Observable<string>;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private studentService: StudentService,
     private toastController: ToastController,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -103,6 +108,9 @@ export class StudentDetailsPage implements OnInit {
       }),
       imageUrl: new FormControl(imageUrl)
     });
+
+    // user profile
+    this.userPhoto$ = this.authService.getUserPhotoUrl();
   }
 
   onSaveStudent() {

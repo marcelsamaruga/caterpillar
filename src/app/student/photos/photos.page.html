@@ -3,43 +3,52 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <img slot="start" class="menu-background" src="../../../assets/img/menu_background.jpg" />
+    <img
+      slot="start"
+      class="menu-background"
+      src="../../../assets/img/menu_background.jpg"
+    />
     <ion-title>Fotos</ion-title>
   </ion-toolbar>
+
+  <ion-avatar class="avatar_profile" slot="primary" *ngIf="userPhoto$ | async as userPhoto">
+    <img [src]="userPhoto" />
+  </ion-avatar>
 </ion-header>
 
 <ion-content size-xs="12">
   <div *ngFor="let student of students" text-center>
     <ion-item *ngIf="student">
       <ion-label text-center
-        ><h2>{{ student.firstName + " " + student.lastName }}
-          <ion-badge *ngIf="student.images && student.images.length > 0">{{ student.images.length }}</ion-badge>
+        ><h2>
+          {{ student.firstName + " " + student.lastName }}
+          <ion-badge *ngIf="student.images && student.images.length > 0">{{
+            student.images.length
+          }}</ion-badge>
         </h2>
-        </ion-label
-      >
+      </ion-label>
     </ion-item>
 
     <ion-item *ngIf="!student || !student.images">
-          <h5>Não há imagens para exibir</h5>
-      </ion-item>
+      <h5>Não há imagens para exibir</h5>
+    </ion-item>
 
-    <ion-item
-      *ngIf="student && student.images"
-    >
+    <ion-item *ngIf="student && student.images">
       <ion-slides [options]="sliderConfig">
-        
         <ion-slide *ngFor="let image of student.images">
           <ion-card>
             <ion-card-header>
               <ion-card-content>
-                <ion-img [src]="image.url" (click)="onOpenGallery(image.url)" tappable></ion-img>
+                <ion-img
+                  [src]="image.url"
+                  (click)="onOpenGallery(image.url)"
+                  tappable
+                ></ion-img>
               </ion-card-content>
             </ion-card-header>
           </ion-card>
-
         </ion-slide>
       </ion-slides>
     </ion-item>
-
   </div>
 </ion-content>

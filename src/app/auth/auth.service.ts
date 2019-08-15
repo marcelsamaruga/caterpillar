@@ -1,21 +1,11 @@
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable, OnDestroy } from "@angular/core";
-import { BehaviorSubject, from } from "rxjs";
+import { BehaviorSubject, from, Observable } from "rxjs";
 import { map, tap, take } from "rxjs/operators";
 
 import { User } from "./user.model";
 import { Plugins } from "@capacitor/core";
 import * as firebase from "firebase/app";
-
-export interface AuthResponse {
-  kind: string;
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  localId: string;
-  expiresIn: string;
-  registered?: boolean;
-}
 
 @Injectable({
   providedIn: "root"
@@ -100,7 +90,7 @@ export class AuthService implements OnDestroy {
         }),
         tap(user => {
           if (user) {
-            this._user.next(user);
+            this.user.next(user);
           }
         }),
         map(user => {
@@ -118,6 +108,12 @@ export class AuthService implements OnDestroy {
 
   ngOnDestroy() {
     this.user.unsubscribe();
+  }
+
+  getUserPhotoUrl(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      map(user => user != null ? user.photoURL : null)
+    );
   }
 
 

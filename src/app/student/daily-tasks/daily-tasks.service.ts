@@ -7,42 +7,19 @@ import { BreastFeed } from "./model/breastfeed.model";
 import { DiaperChange } from "./model/diaper-change.model";
 import { Task } from "./model/tasks.model";
 import { Meal } from './model/meal.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class DailyTasksService implements OnInit {
   tasks: Task[] = [];
-  student: Student[] = [];
+  students$: Observable<Student[]>;
 
   constructor(private studentService: StudentService) {}
 
   ngOnInit() {
-    this.studentService.getStudents().subscribe(
-      students => {
-        this.student = students;
-        this.tasks.push(
-          new Task(
-            "1",
-            new Date(),
-            new Student("TVnW46cJqgjUNS9RyRju", "Ben", "", "41", "Costa"),
-            [new DiaperChange("1")],
-            [
-              new BreastFeed("1", 100, false, true),
-              new BreastFeed("2", 200, true, true)
-            ],
-            true,
-            false,
-            [ 
-              new Meal( "1", MealType.Breakfast, FoodQuantity.Few ),
-              new Meal( "2", MealType.Lunch, FoodQuantity.Havent ),
-              new Meal( "3", MealType.Snack, FoodQuantity.Good ),
-              new Meal( "4", MealType.Soup, FoodQuantity.Good )
-             ]
-          )
-        );
-      }
-    );
+    this.students$ = this.studentService.getStudents();
   }
 
   getTasks() {
@@ -66,5 +43,28 @@ export class DailyTasksService implements OnInit {
                 && task.student.id === studentId;
     } );
     return taskFound[0];
+  }
+
+  getAllTasks() {
+    this.tasks.push(
+      new Task(
+        "1",
+        new Date(),
+        new Student("TVnW46cJqgjUNS9RyRju", "Ben", "", "41", "Costa"),
+        [new DiaperChange("1")],
+        [
+          new BreastFeed("1", 100, false, true),
+          new BreastFeed("2", 200, true, true)
+        ],
+        true,
+        false,
+        [ 
+          new Meal( "1", MealType.Breakfast, FoodQuantity.Few ),
+          new Meal( "2", MealType.Lunch, FoodQuantity.Havent ),
+          new Meal( "3", MealType.Snack, FoodQuantity.Good ),
+          new Meal( "4", MealType.Soup, FoodQuantity.Good )
+         ]
+      )
+    );
   }
 }

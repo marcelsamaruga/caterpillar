@@ -1,9 +1,11 @@
+import { AuthService } from './../../auth/auth.service';
 import { PhotoModalPage } from "./photo-modal/photo-modal.page";
 import { StudentService } from "./../student.service";
 import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ModalController } from "@ionic/angular";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: "app-photos",
@@ -12,6 +14,8 @@ import { ModalController } from "@ionic/angular";
 })
 export class PhotosPage implements OnInit {
   students: Student[] = [];
+
+  userPhoto$: Observable<string>;
 
   sliderConfig = {
     slidesPerView: 1.3,
@@ -26,7 +30,8 @@ export class PhotosPage implements OnInit {
   constructor(
     private activateRouter: ActivatedRoute,
     private studentService: StudentService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -41,6 +46,8 @@ export class PhotosPage implements OnInit {
           .subscribe(students => this.students = students);
       }
     });
+
+    this.userPhoto$ = this.authService.getUserPhotoUrl();
   }
 
   onOpenGallery(image: string) {

@@ -44,17 +44,11 @@ export class StudentService {
       );
   }
 
-
   saveStudent(student: Partial<Student>): Observable<any> {
     if (student.id && student.id !== '') {
       return from(this.db.doc('students/' + student.id).update(student));
     } else {
-      console.log(student);
-      /*return from( this.db.doc('students')
-        .set( student ) );*/
       return from(this.db.collection('students').add(student));
     }
-
-
   }
 }

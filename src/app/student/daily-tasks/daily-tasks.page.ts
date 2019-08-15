@@ -1,9 +1,9 @@
-import { DailyTasksService } from "./daily-tasks.service";
-import { ActivatedRoute } from "@angular/router";
+import { ModalController } from '@ionic/angular';
+import { AuthService } from './../../auth/auth.service';
 import { StudentService } from "../student.service";
 import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
-import { Task } from "./model/tasks.model";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: "app-daily-tasks",
@@ -11,45 +11,25 @@ import { Task } from "./model/tasks.model";
   styleUrls: ["./daily-tasks.page.scss"]
 })
 export class DailyTasksPage implements OnInit {
-  tasks: Task[];
-  students: Student[];
-  showAll = false;
+  students$: Observable<Student[]>;
+  userPhoto$: Observable<string>;
 
   constructor(
     private studentService: StudentService,
-    private activatedRouter: ActivatedRoute,
-    private taskService: DailyTasksService
+    private authService: AuthService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
-    this.activatedRouter.paramMap.subscribe(paramMap => {
-      if (paramMap.has("studentId")) {
-        this.tasks = this.taskService.getTasksByStudent(
-          paramMap.get("studentId")
-        );
-      } else {
-        this.studentService.getStudents().subscribe(
-          students => {
-            this.students = students;
-            this.students.forEach( student => {
-              student.tasks = this.taskService.getTasksByStudent(student.id);
-            } );
-          }
-        );
-        this.showAll = true;
-      }
-    });
-  }
-
-  searchTask(){
-
-  }
-
-  onShowAll() {
-
+    this.students$  = this.studentService.getStudents();
+    this.userPhoto$ = this.authService.getUserPhotoUrl();
   }
 
   getToday(): string {
     return new Date().toISOString().substring(0, 10);
+  }
+
+  onShowDailyFilterModal() {
+
   }
 }
