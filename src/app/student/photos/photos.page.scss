@@ -1,36 +1,26 @@
 ion-content {
-  padding: 0;
-  margin: 0;
-
-  div {
-    width: 100%;  
-    padding: 0;
-  }
-
   ion-item {
     ion-label {
+      margin: 0;
       font-weight: bold;
       letter-spacing: 1px;
       background-color: #ececcdbb;
-      border: 1px solid #d0d17f;
-      border-radius: 13px;
+      border-bottom: 1px solid #d0d17f;
+      --border-radius: 13px;
       padding: 10px 0;
-      margin-top: 10px;
-      -webkit-border-radius: 13px;
-      -moz-border-radius: 13px;
-      -ms-border-radius: 13px;
-      -o-border-radius: 13px;
-}
-
-    ion-card, ion-card-header, ion-card-content {
-      padding: 0;
+      --webkit-border-radius: 13px;
+      --moz-border-radius: 13px;
+      --ms-border-radius: 13px;
+      --o-border-radius: 13px;
     }
-    
   }
 }
 
 ion-badge {
-  margin-left:8px;
+  margin-left: 8px;
 }
 
-
+h6 {
+  font-size: 12px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

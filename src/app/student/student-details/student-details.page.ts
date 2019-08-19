@@ -1,11 +1,13 @@
-import { AuthService } from './../../auth/auth.service';
+import { tap, switchMap, first } from "rxjs/operators";
+import { AuthService } from "./../../auth/auth.service";
 import { StudentService } from "./../student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastController } from "@ionic/angular";
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from "rxjs";
+import { map, take } from "rxjs/operators";
 
 function base64toBlob(base64Data, contentType) {
   contentType = contentType || "";
@@ -36,6 +38,8 @@ function base64toBlob(base64Data, contentType) {
 export class StudentDetailsPage implements OnInit {
   form: FormGroup;
   student: Student;
+  student$: Observable<Student>;
+  studentSub: Subscription;
   firstName: string;
   imagePicked: string;
   imageBlob: any;
@@ -51,29 +55,41 @@ export class StudentDetailsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(paramsMap => {
-      if (paramsMap.has("studentId")) {
-        this.studentService
-          .getStudentById(paramsMap.get("studentId"))
-          .subscribe(student => (this.student = student));
-      }
-    });
+    const studenId = this.activatedRoute.snapshot.paramMap.get("studentId");
+    this.createForm();
 
-    let firstName = null;
-    let lastName = null;
-    let contact1 = null;
-    let contact2 = null;
-    let birthday = null;
-    let imageUrl = null;
+    if (studenId) {
+      this.studentSub = this.studentService
+        .getStudentById(studenId)
+        .subscribe(student => {
+          this.student = student;
+          this.createForm(
+            student.firstName,
+            student.lastName,
+            student.contact1,
+            student.contact2,
+            student.birthday,
+            student.imageUrl
+          );
+        });
+    } else {
+      this.createForm();
+    }
 
-    if (this.student) {
-      firstName = this.student.firstName;
-      lastName = this.student.lastName;
-      contact1 = this.student.contact1;
-      contact2 = this.student.contact2;
-      imageUrl = this.student.imageUrl;
-      //this.imagePicked = this.student.imageUrl;
+    // user profile
+    this.userPhoto$ = this.authService.getUserPhotoUrl();
+  }
 
+  createForm(
+    firstName?,
+    lastName?,
+    contact1?,
+    contact2?,
+    birthday?,
+    imageUrl?
+  ) {
+
+    if (imageUrl) {
       const fr = new FileReader();
       fr.onload = () => {
         const imagePath = fr.result.toString();
@@ -81,10 +97,10 @@ export class StudentDetailsPage implements OnInit {
       };
 
       fr.readAsBinaryString(imageUrl);
+    }
 
-      if (this.student.birthday) {
-        birthday = this.student.birthday.toISOString();
-      }
+    if (birthday) {
+      birthday = birthday.toISOString();
     }
 
     this.form = new FormGroup({
@@ -108,9 +124,6 @@ export class StudentDetailsPage implements OnInit {
       }),
       imageUrl: new FormControl(imageUrl)
     });
-
-    // user profile
-    this.userPhoto$ = this.authService.getUserPhotoUrl();
   }
 
   onSaveStudent() {

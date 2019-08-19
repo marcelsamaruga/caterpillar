@@ -9,16 +9,25 @@
       src="../../../assets/img/menu_background.jpg"
     />
     <ion-title>Fotos</ion-title>
+    <ion-avatar
+      class="avatar_profile"
+      slot="primary"
+      *ngIf="userPhoto$ | async as userPhoto"
+      class="avatar_profile"
+    >
+      <img [src]="userPhoto" />
+    </ion-avatar>
   </ion-toolbar>
-
-  <ion-avatar class="avatar_profile" slot="primary" *ngIf="userPhoto$ | async as userPhoto">
-    <img [src]="userPhoto" />
-  </ion-avatar>
 </ion-header>
 
-<ion-content size-xs="12">
-  <div *ngFor="let student of students" text-center>
-    <ion-item *ngIf="student">
+<ion-content fullscreen>
+  <ion-card
+    *ngFor="let student of students"
+    text-center
+    no-margin
+    no-padding
+  >
+    <ion-item *ngIf="student" no-padding>
       <ion-label text-center
         ><h2>
           {{ student.firstName + " " + student.lastName }}
@@ -29,11 +38,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item *ngIf="!student || !student.images">
-      <h5>Não há imagens para exibir</h5>
-    </ion-item>
-
-    <ion-item *ngIf="student && student.images">
+    <ion-card-content *ngIf="student && student.images">
       <ion-slides [options]="sliderConfig">
         <ion-slide *ngFor="let image of student.images">
           <ion-card>
@@ -49,6 +54,12 @@
           </ion-card>
         </ion-slide>
       </ion-slides>
-    </ion-item>
-  </div>
+    </ion-card-content>
+
+    <ion-card-content *ngIf="!student || !student.images">
+      <ion-item lines="none">
+        <h6>Não há imagens para exibir</h6>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

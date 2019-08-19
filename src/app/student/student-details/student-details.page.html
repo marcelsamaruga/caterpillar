@@ -6,17 +6,21 @@
     <img
       slot="start"
       class="menu-background"
-      class="avatar_profile" 
+      class="avatar_profile"
       src="../../../assets/img/menu_background.jpg"
     />
     <ion-title>Aluno</ion-title>
     <ion-buttons color="primary" slot="primary" *ngIf="student" padding>
       <ion-icon name="trash" (onClick)="onDeleteStudent()"></ion-icon>
     </ion-buttons>
+    <ion-avatar
+      slot="primary"
+      *ngIf="userPhoto$ | async as userPhoto"
+      class="avatar_profile"
+    >
+      <img [src]="userPhoto" />
+    </ion-avatar>
   </ion-toolbar>
-  <ion-avatar slot="primary" *ngIf="userPhoto$ | async as userPhoto">
-    <img [src]="userPhoto" />
-  </ion-avatar>
 </ion-header>
 
 <ion-content text-center>
@@ -98,9 +102,14 @@
       </ion-row>
 
       <ion-row>
-        <ion-col size-xs="8" offset-xs="2">
+        <ion-col size-xs="4" offset-xs="1">
           <ion-button expand="block" type="submit" [disabled]="!form.valid">
             Salvar
+          </ion-button>
+        </ion-col>
+        <ion-col size-xs="4">
+          <ion-button expand="block" type="button" (click)="onDeleteStudent()" [disabled]="!form.valid">
+            Remover
           </ion-button>
         </ion-col>
       </ion-row>

@@ -10,11 +10,14 @@
       src="../../../assets/img/menu_background.jpg"
     />
     <ion-title>Meu dia na escola</ion-title>
-    <ion-avatar class="avatar_profile" slot="primary" *ngIf="userPhoto$ | async as userPhoto">
-        <img [src]="userPhoto" />
-      </ion-avatar>
+    <ion-avatar
+      class="avatar_profile"
+      slot="primary"
+      *ngIf="userPhoto$ | async as userPhoto"
+    >
+      <img [src]="userPhoto" />
+    </ion-avatar>
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content>
@@ -63,9 +66,10 @@
 
       <div *ngIf="task && task.meal && showMeals">
         <ion-row *ngFor="let meal of task.meal" class="meal_row">
-            <ion-col size-xs="12">
-              <app-meals [title]="meal.mealType"></app-meals>
+          <ion-col size-xs="12">
+            <app-meals [title]="meal.mealType"></app-meals>
           </ion-col>
+          <hr />
         </ion-row>
       </div>
 
@@ -101,8 +105,8 @@
           <ion-icon name="bed"></ion-icon>
         </ion-fab-button>
         <ion-fab-button color="secondary">
-            <ion-icon name="tennisball"></ion-icon>
-          </ion-fab-button>
+          <ion-icon name="tennisball"></ion-icon>
+        </ion-fab-button>
       </ion-fab-list>
     </ion-fab>
   </form>
