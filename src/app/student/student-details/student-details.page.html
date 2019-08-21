@@ -28,6 +28,15 @@
     <form (ngSubmit)="onSaveStudent()" [formGroup]="form">
       <ion-row>
         <ion-col size-xs="10" offset-xs="1">
+          <ion-item position="floating" lines="none">Foto</ion-item>
+          <ion-avatar class="profile-pic" (click)="onChooseImageSource()">
+            <ion-img [src]="imageProfile"></ion-img>
+          </ion-avatar>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-xs="10" offset-xs="1">
           <ion-item>
             <ion-label position="floating">Nome</ion-label>
             <ion-input
@@ -108,7 +117,12 @@
           </ion-button>
         </ion-col>
         <ion-col size-xs="4">
-          <ion-button expand="block" type="button" (click)="onDeleteStudent()" [disabled]="!form.valid">
+          <ion-button
+            expand="block"
+            type="button"
+            (click)="onDeleteStudent()"
+            [disabled]="!form.valid"
+          >
             Remover
           </ion-button>
         </ion-col>

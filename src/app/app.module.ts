@@ -4,16 +4,17 @@ import { RouteReuseStrategy } from "@angular/router";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { Camera } from '@ionic-native/camera/ngx';
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
-import { environment } from 'src/environments/environment.prod';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from "src/environments/environment.prod";
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from "@angular/fire/storage";
+import { AngularFireAuthModule } from "@angular/fire/auth";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,12 +26,13 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule, 
+    AngularFireAuthModule,
     AngularFireStorageModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
@@ -49,3 +51,5 @@ export class AppModule {}
 // npm install @angular/fire firebase --save
 // ionic cordova prepare
 // npm install firebaseui --save
+// ionic cordova plugin add cordova-plugin-camera
+// npm install @ionic-native/camera

@@ -1,34 +1,18 @@
-import { tap, switchMap, first } from "rxjs/operators";
 import { AuthService } from "./../../auth/auth.service";
 import { StudentService } from "./../student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ToastController } from "@ionic/angular";
+import { ToastController, AlertController } from "@ionic/angular";
 import { Observable, Subscription } from "rxjs";
-import { map, take } from "rxjs/operators";
-
-function base64toBlob(base64Data, contentType) {
-  contentType = contentType || "";
-  const sliceSize = 1024;
-  const byteCharacters = window.atob(base64Data);
-  const bytesLength = byteCharacters.length;
-  const slicesCount = Math.ceil(bytesLength / sliceSize);
-  const byteArrays = new Array(slicesCount);
-
-  for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-    const begin = sliceIndex * sliceSize;
-    const end = Math.min(begin + sliceSize, bytesLength);
-
-    const bytes = new Array(end - begin);
-    for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
-      bytes[i] = byteCharacters[offset].charCodeAt(0);
-    }
-    byteArrays[sliceIndex] = new Uint8Array(bytes);
-  }
-  return new Blob(byteArrays, { type: contentType });
-}
+import { MessageController } from "src/app/shared/message-controller";
+import {
+  CameraOptions,
+  DestinationType,
+  Camera,
+  PictureSourceType
+} from "@ionic-native/camera/ngx";
 
 @Component({
   selector: "app-student-details",
@@ -39,41 +23,38 @@ export class StudentDetailsPage implements OnInit {
   form: FormGroup;
   student: Student;
   student$: Observable<Student>;
-  studentSub: Subscription;
   firstName: string;
-  imagePicked: string;
-  imageBlob: any;
+  imageProfile: string;
 
   userPhoto$: Observable<string>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private studentService: StudentService,
-    private toastController: ToastController,
-    private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private alertController: AlertController,
+    private messageController: MessageController,
+    private camera: Camera
   ) {}
 
   ngOnInit() {
-    const studenId = this.activatedRoute.snapshot.paramMap.get("studentId");
+    const studentId = this.activatedRoute.snapshot.paramMap.get("studentId");
     this.createForm();
 
-    if (studenId) {
-      this.studentSub = this.studentService
-        .getStudentById(studenId)
-        .subscribe(student => {
-          this.student = student;
-          this.createForm(
-            student.firstName,
-            student.lastName,
-            student.contact1,
-            student.contact2,
-            student.birthday,
-            student.imageUrl
-          );
-        });
-    } else {
-      this.createForm();
+    if (studentId) {
+      this.studentService.getStudentById(studentId).subscribe(student => {
+        this.student = student;
+        this.createForm(
+          student.firstName,
+          student.lastName,
+          student.contact1,
+          student.contact2,
+          student.birthday,
+          student.imageProfile
+        );
+
+        this.imageProfile = student.imageProfile;
+      });
     }
 
     // user profile
@@ -86,21 +67,10 @@ export class StudentDetailsPage implements OnInit {
     contact1?,
     contact2?,
     birthday?,
-    imageUrl?
+    imageProfile?
   ) {
-
-    if (imageUrl) {
-      const fr = new FileReader();
-      fr.onload = () => {
-        const imagePath = fr.result.toString();
-        this.imagePicked = imagePath;
-      };
-
-      fr.readAsBinaryString(imageUrl);
-    }
-
     if (birthday) {
-      birthday = birthday.toISOString();
+      //birthday = birthday.toISOString();
     }
 
     this.form = new FormGroup({
@@ -122,7 +92,7 @@ export class StudentDetailsPage implements OnInit {
       birthday: new FormControl(birthday, {
         updateOn: "blur"
       }),
-      imageUrl: new FormControl(imageUrl)
+      imageProfile: new FormControl(imageProfile)
     });
   }
 
@@ -140,56 +110,73 @@ export class StudentDetailsPage implements OnInit {
     const newStudent = {
       id: this.student && this.student.id ? this.student.id : undefined,
       firstName: this.form.value["firstName"],
-      //imageUrl: this.imageBlob,
       contact1: this.form.value["contact1"],
       lastName: this.form.value["lastName"],
       birthday: birthdayDate,
-      contact2: this.form.value["contact2"]
+      contact2: this.form.value["contact2"],
+      imageProfile: this.imageProfile
     };
 
-    this.studentService.saveStudent(newStudent).subscribe(student => {
-      this.toastController
-        .create({
-          message: "Registro salvo",
-          showCloseButton: true,
-          duration: 1800
-        })
-        .then(toastControllerElement => {
-          toastControllerElement.present();
-          this.router.navigateByUrl("/student");
-        });
+    this.studentService.saveStudent(newStudent).subscribe(() => {
+      this.messageController.createNessage(
+        "Aluno salvo com sucesso",
+        "/student"
+      );
     });
   }
 
   onDeleteStudent() {}
 
-  onImagePicked(imageData: string | File) {
-    /*let imageFile;
-    if (typeof imageData === "string") {
-      console.log('a');
-      try {
-        imageFile = base64toBlob(
-          imageData.replace("data:image/jpeg;base64,", ""),
-          "image/jpeg"
-        );
-      } catch (error) {
-        console.log(error);
-        return;
-      }
-    } else {
-      console.log('aj');
-      imageFile = imageData;
-    }
-    this.form.patchValue({ imageUrl: imageFile });*/
-    let imageFile;
+  async onChooseImageSource() {
+    const cameraOptions: CameraOptions = {
+      quality: 100,
+      correctOrientation: true,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      mediaType: this.camera.MediaType.PICTURE,
+      targetHeight: 200,
+      sourceType: this.camera.PictureSourceType.CAMERA
+    };
 
-    if (typeof imageData === "string") {
-      //this.imagePicked = imageData;
-      imageFile = base64toBlob(
-        imageData.replace("data:image/jpeg;base64,", ""),
-        "image/jpeg"
-      );
-      this.imageBlob = imageFile;
-    }
+    const alert = await this.alertController.create({
+      header: "Foto de perfil",
+      message: "Favor escolher o tipo de imagem:",
+      buttons: [
+        {
+          text: "Camera",
+          handler: () => {
+            this.camera.getPicture( this.createCameraOptions() )
+              .then( image => {
+                this.imageProfile = 'data:image/jpeg;base64,' + image;
+              });
+          }
+        },
+        {
+          text: "Galeria",
+          handler: () => {
+            this.camera.getPicture( this.createCameraOptions(100, PictureSourceType.PHOTOLIBRARY, 200) )
+              .then( image => {
+                this.imageProfile = 'data:image/jpeg;base64,' + image;
+              });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  createCameraOptions(
+    quality = 100,
+    sourceType: PictureSourceType = PictureSourceType.CAMERA,
+    targetHeight = 200
+  ): CameraOptions {
+    return {
+      quality,
+      correctOrientation: true,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      mediaType: this.camera.MediaType.PICTURE,
+      targetHeight,
+      sourceType
+    };
   }
 }

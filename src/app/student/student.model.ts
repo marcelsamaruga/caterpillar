@@ -5,7 +5,7 @@ export class Student {
   constructor(
     public id: string,
     public firstName: string,
-    public imageUrl: any,
+    public imageProfile: any,
     public contact1: string,
     public lastName: string,
     public images?: Photo[],
