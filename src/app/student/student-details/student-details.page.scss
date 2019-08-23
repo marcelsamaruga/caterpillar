@@ -1,6 +1,12 @@
-.profile_pic {
-    width: 200px;
-    height: 200px;
-    margin: 10px auto;
-    border: 1px solid gray;
+.col-180 {
+    height: 160px;
+}
+
+ion-col>ion-avatar>img {
+    max-width: 130px;
+    margin-top: 15px;
+    align-items: center;
+    border: 2px solid #555;
+    height: 140px; 
+    width: 140px;
 }

@@ -1,6 +1,10 @@
+import { Injectable } from '@angular/core';
 import { ToastController } from "@ionic/angular";
 import { Router } from '@angular/router';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class MessageController {
   constructor(private _toastController: ToastController, private _router: Router) {}
 

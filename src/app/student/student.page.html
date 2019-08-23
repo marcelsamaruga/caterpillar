@@ -13,7 +13,7 @@
 
     <ion-avatar
       slot="primary"
-      class="avatar_profile" 
+      class="avatar_profile"
       *ngIf="userPhoto$ | async as userPhoto"
     >
       <img [src]="userPhoto" />
@@ -21,18 +21,21 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list size-xs="8" offset-xs="2">
-    <ion-item-sliding *ngFor="let student of students">
+<ion-content fullscreen>
+  <ion-list>
+    <ion-list-header>Lista de alunos</ion-list-header>
+    <ion-item-sliding size-xs="8" offset-xs="2" *ngFor="let student of students">
       <ion-item>
-        <ion-avatar item-start>
-          <ion-img [src]="student.imageUrl" *ngIf="student.imageUrl"></ion-img>
+        <ion-avatar slot="start" item-start>
+          <ion-img
+            [src]="student.imageProfile"
+            *ngIf="student.imageProfile"
+          ></ion-img>
         </ion-avatar>
         <ion-label
-          padding
           [routerLink]="['/', 'student', 'student-details', student.id]"
         >
-          <h2>{{ student.firstName }}</h2>
+          <h3>{{ student.firstName }}</h3>
           <p>{{ student.firstName + " " + student.lastName }}</p>
         </ion-label>
       </ion-item>
@@ -58,11 +61,11 @@
     </ion-item-sliding>
   </ion-list>
 
-    <ion-button
-      [routerLink]="['/', 'student', 'student-details', 'new']"
-      size="default"      
-    >
-      <ion-icon slot="start" name="add"></ion-icon>
-      Novo aluno
-    </ion-button>
+  <ion-button
+    [routerLink]="['/', 'student', 'student-details', 'new']"
+    size="default"
+  >
+    <ion-icon slot="start" name="add"></ion-icon>
+    Novo aluno
+  </ion-button>
 </ion-content>

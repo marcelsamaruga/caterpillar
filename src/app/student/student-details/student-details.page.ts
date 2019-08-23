@@ -128,14 +128,6 @@ export class StudentDetailsPage implements OnInit {
   onDeleteStudent() {}
 
   async onChooseImageSource() {
-    const cameraOptions: CameraOptions = {
-      quality: 100,
-      correctOrientation: true,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      mediaType: this.camera.MediaType.PICTURE,
-      targetHeight: 200,
-      sourceType: this.camera.PictureSourceType.CAMERA
-    };
 
     const alert = await this.alertController.create({
       header: "Foto de perfil",

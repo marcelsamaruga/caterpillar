@@ -27,10 +27,10 @@
   <ion-grid>
     <form (ngSubmit)="onSaveStudent()" [formGroup]="form">
       <ion-row>
-        <ion-col size-xs="10" offset-xs="1">
-          <ion-item position="floating" lines="none">Foto</ion-item>
-          <ion-avatar class="profile-pic" (click)="onChooseImageSource()">
-            <ion-img [src]="imageProfile"></ion-img>
+        <ion-col size-xs="4" offset-xs="4" class="col-180">
+          <ion-avatar (click)="onChooseImageSource()">
+            <img [src]="imageProfile" *ngIf="imageProfile">
+            <img src="../../../assets/img/image-not-found.png" *ngIf="!imageProfile">
           </ion-avatar>
         </ion-col>
       </ion-row>
@@ -97,16 +97,6 @@
               placeholder="(XX) XXXXX-XXXX"
             ></ion-input>
           </ion-item>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col size-xs="10" offset-xs="1">
-          <ion-item position="floating" lines="none">Foto</ion-item>
-          <app-image-picker
-            (imagePickEmitter)="onImagePicked($event)"
-            [selectedImageInput]="imagePicked"
-          ></app-image-picker>
         </ion-col>
       </ion-row>
 

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { StudentDetailsPage } from './student-details.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MessageController } from '../../shared/message-controller';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes)
   ],
+  providers: [MessageController],
   declarations: [StudentDetailsPage]
 })
 export class StudentDetailsPageModule {}

@@ -53,3 +53,5 @@ export class AppModule {}
 // npm install firebaseui --save
 // ionic cordova plugin add cordova-plugin-camera
 // npm install @ionic-native/camera
+// ionic cordova platform add android
+// ionic cordova platform add ios
