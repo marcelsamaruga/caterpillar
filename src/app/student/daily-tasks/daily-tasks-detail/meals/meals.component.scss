@@ -1,20 +1,20 @@
-ion-item {
+.class-ion-item {
     height: 36px;
-    ion-label {
-        margin-left: 5px;
-    }
+}
+.class-ion-label {
+    margin-left: 5px;
 }
 
 div.item-native {
     padding: 0;
 }
 
-ion-grid {
+.class-ion-grid {
     margin-top: -10px;
-    ion-row{
-        height: 35px;
-    } 
 }
+.class-ion-row{
+    height: 35px;
+} 
 
 h6 {
     margin-bottom:0;

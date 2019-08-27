@@ -75,22 +75,25 @@
 
       <ion-row *ngIf="showSleeping">
         <ion-col size-xs="12">
-          <ion-label class="bold">
-            Hoje eu fui dormir das:
-          </ion-label>
+          <app-sleeping></app-sleeping>
         </ion-col>
       </ion-row>
 
       <ion-row *ngIf="showActivity">
         <ion-col size-xs="12">
-          <ion-label class="bold">
-            Hoje eu fui:
-          </ion-label>
+          <app-activities></app-activities>
         </ion-col>
       </ion-row>
+
+      <ion-row *ngIf="showDiapers">
+          <ion-col size-xs="12">
+            <app-diapers></app-diapers>
+          </ion-col>
+        </ion-row>
+      
     </ion-grid>
 
-    <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+    <ion-fab vertical="top" horizontal="end" edge slot="fixed" class="class-ion-fab">
       <ion-fab-button>
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>

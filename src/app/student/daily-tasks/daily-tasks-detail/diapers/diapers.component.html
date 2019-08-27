@@ -1,0 +1,32 @@
+<ion-list>
+  <ion-list-header>
+    <ion-label>Troca de fraldas/banheiro</ion-label>
+  </ion-list-header>
+
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label>Hora:</ion-label>
+          <ion-datetime
+            displayFormat="hh:mm"
+            pickerFormat="hh:mm"
+          ></ion-datetime>
+        </ion-col>
+        <ion-col>
+          <ion-list>
+            <ion-item>
+              <ion-label>Xixi</ion-label>
+              <ion-checkbox slot="start"></ion-checkbox>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Cocô</ion-label>
+              <ion-checkbox slot="start"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</ion-list>

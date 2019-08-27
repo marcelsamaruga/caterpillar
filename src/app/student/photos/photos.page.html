@@ -21,17 +21,12 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-card
-    *ngFor="let student of students"
-    text-center
-    no-margin
-    no-padding
-  >
+  <ion-card *ngFor="let student of students" text-center no-margin no-padding>
     <ion-item *ngIf="student" no-padding>
-      <ion-label text-center
+      <ion-label text-center class="class-ion-label"
         ><h2>
           {{ student.firstName + " " + student.lastName }}
-          <ion-badge *ngIf="student.images && student.images.length > 0">{{
+          <ion-badge class="class-ion-badge" *ngIf="student.images && student.images.length > 0">{{
             student.images.length
           }}</ion-badge>
         </h2>

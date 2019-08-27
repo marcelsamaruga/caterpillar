@@ -23,8 +23,20 @@
 
 <ion-content fullscreen>
   <ion-list>
-    <ion-list-header>Lista de alunos</ion-list-header>
-    <ion-item-sliding size-xs="8" offset-xs="2" *ngFor="let student of students">
+    <ion-list-header class="class-ion-list-header"
+      >Lista de alunos</ion-list-header
+    >
+    <ion-spinner
+      name="crescent"
+      color="primary"
+      *ngIf="isLoading"
+      text-center
+    ></ion-spinner>
+    <ion-item-sliding
+      size-xs="8"
+      offset-xs="2"
+      *ngFor="let student of students"
+    >
       <ion-item>
         <ion-avatar slot="start" item-start>
           <ion-img
@@ -43,7 +55,13 @@
         <button ion-button color="primary">
           <ion-icon
             name="calendar"
-            [routerLink]="['/', 'student', 'daily-tasks', student.id]"
+            [routerLink]="[
+              '/',
+              'student',
+              'daily-tasks-detail',
+              student.id,
+              getToday()
+            ]"
           ></ion-icon>
           Hoje
         </button>
@@ -62,6 +80,7 @@
   </ion-list>
 
   <ion-button
+    class="class-ion-button"
     [routerLink]="['/', 'student', 'student-details', 'new']"
     size="default"
   >

@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 export class StudentPage implements OnInit {
   students: Student[] = [];
   userPhoto$: Observable<string>;
+  isLoading = false;
 
   constructor(
     private studentService: StudentService,
@@ -25,9 +26,17 @@ export class StudentPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.isLoading = true;
     this.studentService
       .getStudents()
-      .subscribe(students => (this.students = students));
+      .subscribe(students => {
+        this.students = students;
+        this.isLoading = false;
+      });
+  }
+
+  getToday(): string {
+    return new Date().toISOString().substring(0, 10);
   }
 
   showDailyTasks(idStudent: string) {}

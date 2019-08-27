@@ -1,6 +1,4 @@
-ion-content {
-  ion-item {
-    ion-label {
+    .class-ion-label {
       margin: 0;
       font-weight: bold;
       letter-spacing: 1px;
@@ -13,10 +11,8 @@ ion-content {
       --ms-border-radius: 13px;
       --o-border-radius: 13px;
     }
-  }
-}
 
-ion-badge {
+.class-ion-badge {
   margin-left: 8px;
 }
 
