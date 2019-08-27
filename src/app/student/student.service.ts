@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Student } from './student.model';
 import {
   AngularFirestore,
@@ -7,15 +7,15 @@ import {
 import { map, first } from 'rxjs/operators';
 import { Observable, from } from 'rxjs';
 import { convertDBSnapshots, convertDBSnapshotsByOne } from '../shared/utils';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
-  students: Student[] = [];
   dbStudentCollection: AngularFirestoreCollection;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, private storage: AngularFireStorage) {
     this.dbStudentCollection = db.collection<Student>('students');
   }
 
@@ -37,8 +37,7 @@ export class StudentService {
       .snapshotChanges()
       .pipe(
         map(snapshots => {
-          const student = convertDBSnapshotsByOne<Student>(snapshots);
-          return student;
+          return convertDBSnapshotsByOne<Student>(snapshots);
         }),
         first()
       );
@@ -50,5 +49,10 @@ export class StudentService {
     } else {
       return from(this.db.collection('students').add(student));
     }
+  }
+
+  uploadProfileImage(student: Student, file: string) {
+    const  profileRef = this.storage.ref(`/images/profiles/${student.id}/profile.jpg`);
+    profileRef.putString(file);
   }
 }

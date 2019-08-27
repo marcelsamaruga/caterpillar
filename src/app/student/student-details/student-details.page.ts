@@ -69,9 +69,6 @@ export class StudentDetailsPage implements OnInit {
     birthday?,
     imageProfile?
   ) {
-    if (birthday) {
-      //birthday = birthday.toISOString();
-    }
 
     this.form = new FormGroup({
       firstName: new FormControl(firstName, {
@@ -118,6 +115,9 @@ export class StudentDetailsPage implements OnInit {
     };
 
     this.studentService.saveStudent(newStudent).subscribe(() => {
+      // save image at the store
+      this.studentService.uploadProfileImage(newStudent, this.imageProfile);
+
       this.messageController.createNessage(
         "Aluno salvo com sucesso",
         "/student"

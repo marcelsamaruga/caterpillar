@@ -11,6 +11,7 @@ export class Student {
     public images?: Photo[],
     public birthday?: Date,
     public contact2?: string,
-    public tasks?: Task[]
+    public tasks?: Task[],
+    public photo?: Photo[]
   ) {}
 }

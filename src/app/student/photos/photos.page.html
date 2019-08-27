@@ -26,32 +26,33 @@
       <ion-label text-center class="class-ion-label"
         ><h2>
           {{ student.firstName + " " + student.lastName }}
-          <ion-badge class="class-ion-badge" *ngIf="student.images && student.images.length > 0">{{
+          <ion-badge class="class-ion-badge" *ngIf="student.photo && student.photo.length > 0">{{
             student.images.length
           }}</ion-badge>
         </h2>
       </ion-label>
     </ion-item>
 
-    <ion-card-content *ngIf="student && student.images">
+    <ion-card-content *ngIf="student && student.photo">
       <ion-slides [options]="sliderConfig">
-        <ion-slide *ngFor="let image of student.images">
+        <ion-slide *ngFor="let image of student.photo">
           <ion-card>
             <ion-card-header>
-              <ion-card-content>
-                <ion-img
-                  [src]="image.url"
-                  (click)="onOpenGallery(image.url)"
-                  tappable
-                ></ion-img>
-              </ion-card-content>
+              <ion-label>{{ image.date }}</ion-label>
             </ion-card-header>
+                <ion-card-content>
+                  <ion-img
+                    [src]="image.url"
+                    (click)="onOpenGallery(image.url)"
+                    tappable
+                  ></ion-img>
+                </ion-card-content>
           </ion-card>
         </ion-slide>
       </ion-slides>
     </ion-card-content>
 
-    <ion-card-content *ngIf="!student || !student.images">
+    <ion-card-content *ngIf="!student || !student.photo">
       <ion-item lines="none">
         <h6>Não há imagens para exibir</h6>
       </ion-item>
