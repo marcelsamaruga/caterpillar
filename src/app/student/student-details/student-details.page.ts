@@ -1,15 +1,14 @@
 import { AuthService } from "./../../auth/auth.service";
 import { StudentService } from "./../student.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ToastController, AlertController } from "@ionic/angular";
-import { Observable, Subscription } from "rxjs";
+import { AlertController } from "@ionic/angular";
+import { Observable } from "rxjs";
 import { MessageController } from "src/app/shared/message-controller";
 import {
   CameraOptions,
-  DestinationType,
   Camera,
   PictureSourceType
 } from "@ionic-native/camera/ngx";
@@ -53,7 +52,9 @@ export class StudentDetailsPage implements OnInit {
           student.imageProfile
         );
 
-        this.imageProfile = student.imageProfile;
+        //this.studentService.getProfileImage(studentId).subscribe( downloadUrl => {
+          this.imageProfile = 'https://secure.gravatar.com/avatar/396980d7d6cb076db90006c5ab02e882.jpg?s=192&d=mm';
+        //});
       });
     }
 
@@ -69,7 +70,6 @@ export class StudentDetailsPage implements OnInit {
     birthday?,
     imageProfile?
   ) {
-
     this.form = new FormGroup({
       firstName: new FormControl(firstName, {
         updateOn: "blur",
@@ -101,7 +101,7 @@ export class StudentDetailsPage implements OnInit {
     let birthdayDate = null;
 
     if (this.form.value["birthday"]) {
-      birthdayDate = new Date(this.form.value["birthday"]);
+      birthdayDate = this.form.value["birthday"];
     }
 
     const newStudent = {
@@ -114,21 +114,22 @@ export class StudentDetailsPage implements OnInit {
       imageProfile: this.imageProfile
     };
 
-    this.studentService.saveStudent(newStudent).subscribe(() => {
+    this.studentService.saveStudent(newStudent).subscribe((student) => {
       // save image at the store
-      this.studentService.uploadProfileImage(newStudent, this.imageProfile);
-
-      this.messageController.createNessage(
-        "Aluno salvo com sucesso",
-        "/student"
-      );
+      this.studentService
+        .uploadProfileImage(student, this.imageProfile)
+        .subscribe(() => {
+          this.messageController.createNessage(
+            "Aluno salvo com sucesso",
+            "/student"
+          );
+        });
     });
   }
 
   onDeleteStudent() {}
 
   async onChooseImageSource() {
-
     const alert = await this.alertController.create({
       header: "Foto de perfil",
       message: "Favor escolher o tipo de imagem:",
@@ -136,18 +137,24 @@ export class StudentDetailsPage implements OnInit {
         {
           text: "Camera",
           handler: () => {
-            this.camera.getPicture( this.createCameraOptions() )
-              .then( image => {
-                this.imageProfile = 'data:image/jpeg;base64,' + image;
-              });
+            this.camera.getPicture(this.createCameraOptions()).then(image => {
+              this.imageProfile = "data:image/jpeg;base64," + image;
+            });
           }
         },
         {
           text: "Galeria",
           handler: () => {
-            this.camera.getPicture( this.createCameraOptions(100, PictureSourceType.PHOTOLIBRARY, 200) )
-              .then( image => {
-                this.imageProfile = 'data:image/jpeg;base64,' + image;
+            this.camera
+              .getPicture(
+                this.createCameraOptions(
+                  100,
+                  PictureSourceType.PHOTOLIBRARY,
+                  200
+                )
+              )
+              .then(image => {
+                this.imageProfile = "data:image/jpeg;base64," + image;
               });
           }
         }

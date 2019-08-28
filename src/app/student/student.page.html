@@ -38,10 +38,9 @@
       *ngFor="let student of students"
     >
       <ion-item>
-        <ion-avatar slot="start" item-start>
+        <ion-avatar slot="start" item-start *ngIf="student.imageProfile | async as imageAvatar">
           <ion-img
-            [src]="student.imageProfile"
-            *ngIf="student.imageProfile"
+            [src]="imageAvatar"
           ></ion-img>
         </ion-avatar>
         <ion-label

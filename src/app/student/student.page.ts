@@ -17,7 +17,6 @@ export class StudentPage implements OnInit {
 
   constructor(
     private studentService: StudentService,
-    private router: Router,
     private authService: AuthService
   ) {}
 
@@ -30,6 +29,11 @@ export class StudentPage implements OnInit {
     this.studentService
       .getStudents()
       .subscribe(students => {
+
+        students.forEach(student => {
+          student.imageProfile = this.studentService.getProfileImage(student.id);
+        });
+
         this.students = students;
         this.isLoading = false;
       });

@@ -51,8 +51,18 @@ export class StudentService {
     }
   }
 
-  uploadProfileImage(student: Student, file: string) {
-    const  profileRef = this.storage.ref(`/images/profiles/${student.id}/profile.jpg`);
-    profileRef.putString(file);
+  uploadProfileImage(studentId: string, file: string): Observable<any> {
+    console.log('file',file);
+    const profileRef = this.storage.ref(`/images/profiles/${studentId}/${file}`);
+    return from(profileRef.putString(file));
+  }
+
+  getProfileImage(studentId: string): Observable<any> {
+    console.log(`/images/profiles/${studentId}/profile.jpg`);
+    const profileRef = this.storage.ref(`images/profiles/${studentId}/profile.jpg`);
+    console.log(`student=${profileRef}`);
+    console.log(`->${profileRef.getDownloadURL()}`);
+    profileRef.getDownloadURL().subscribe(url => console.log(url));
+    return profileRef.getDownloadURL();
   }
 }
