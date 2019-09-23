@@ -55,3 +55,5 @@ export class AppModule {}
 // npm install @ionic-native/camera
 // ionic cordova platform add android
 // ionic cordova platform add ios
+// ionic cordova run android --device
+// ionic cordova platform 
