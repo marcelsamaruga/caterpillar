@@ -21,41 +21,31 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-card *ngFor="let student of students" text-center no-margin no-padding>
-    <ion-item *ngIf="student" no-padding>
-      <ion-label text-center class="class-ion-label"
-        ><h2>
-          {{ student.firstName + " " + student.lastName }}
-          <ion-badge class="class-ion-badge" *ngIf="student.photo && student.photo.length > 0">{{
-            student.images.length
-          }}</ion-badge>
-        </h2>
+  <div *ngFor="let student of students$ | async">
+    <ion-item color="primary" text-center>
+      <ion-label>
+        <h5>{{ student.firstName + " " + student.lastName }}</h5>
       </ion-label>
     </ion-item>
 
-    <ion-card-content *ngIf="student && student.photo">
-      <ion-slides [options]="sliderConfig">
-        <ion-slide *ngFor="let image of student.photo">
-          <ion-card>
+    <div *ngIf="student.photo | async as studentPhotos">
+      <ion-slides [options]="sliderConfig" padding>
+        <ion-slide *ngFor="let image of studentPhotos">
+          <ion-card text-center no-margin no-padding color="light">
             <ion-card-header>
-              <ion-label>{{ image.date }}</ion-label>
+              <ion-card-subtitle>
+                {{ image.date }}
+              </ion-card-subtitle>
             </ion-card-header>
-                <ion-card-content>
-                  <ion-img
-                    [src]="image.url"
-                    (click)="onOpenGallery(image.url)"
-                    tappable
-                  ></ion-img>
-                </ion-card-content>
+
+            <ion-img
+              [src]="image.url"
+              (click)="onOpenGallery(image.url)"
+              tappable
+            ></ion-img>
           </ion-card>
         </ion-slide>
       </ion-slides>
-    </ion-card-content>
-
-    <ion-card-content *ngIf="!student || !student.photo">
-      <ion-item lines="none">
-        <h6>Não há imagens para exibir</h6>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+    </div>
+  </div>
 </ion-content>

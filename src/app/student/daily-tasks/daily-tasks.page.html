@@ -10,7 +10,9 @@
     />
     <ion-title>Minhas tarefas</ion-title>
     <ion-buttons color="primary" slot="primary" padding>
-      <ion-icon name="search" (onClick)="onShowDailyFilterModal()"></ion-icon>
+      <ion-button (click)="onShowDailyFilterModal()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-avatar
       class="avatar_profile"
@@ -27,7 +29,10 @@
     <ion-item-sliding *ngFor="let student of students$ | async">
       <ion-item>
         <ion-avatar item-start>
-          <ion-img [src]="student.imageProfile" *ngIf="student.imageProfile"></ion-img>
+          <ion-img
+            [src]="student.imageProfile"
+            *ngIf="student.imageProfile"
+          ></ion-img>
         </ion-avatar>
         <ion-label
           padding
@@ -68,8 +73,4 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-
-  <ion-button fill="clear" color="primary" (click)="onShowDailyFilterModal()">
-    Filtrar por data
-  </ion-button>
 </ion-content>

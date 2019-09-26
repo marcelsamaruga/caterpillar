@@ -12,6 +12,7 @@ import {
   Camera,
   PictureSourceType
 } from "@ionic-native/camera/ngx";
+import { last, switchMap } from "rxjs/operators";
 
 @Component({
   selector: "app-student-details",
@@ -20,12 +21,10 @@ import {
 })
 export class StudentDetailsPage implements OnInit {
   form: FormGroup;
-  student: Student;
   student$: Observable<Student>;
-  firstName: string;
-  imageProfile: string;
-
   userPhoto$: Observable<string>;
+  studentId: string;
+  imageProfile: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,8 +40,11 @@ export class StudentDetailsPage implements OnInit {
     this.createForm();
 
     if (studentId) {
-      this.studentService.getStudentById(studentId).subscribe(student => {
-        this.student = student;
+      this.student$ = this.studentService.getStudentById(studentId);
+      this.student$.subscribe(student => {
+        this.studentId = student.id;
+        this.imageProfile = student.imageProfile;
+
         this.createForm(
           student.firstName,
           student.lastName,
@@ -51,10 +53,6 @@ export class StudentDetailsPage implements OnInit {
           student.birthday,
           student.imageProfile
         );
-
-        //this.studentService.getProfileImage(studentId).subscribe( downloadUrl => {
-          this.imageProfile = 'https://secure.gravatar.com/avatar/396980d7d6cb076db90006c5ab02e882.jpg?s=192&d=mm';
-        //});
       });
     }
 
@@ -104,8 +102,8 @@ export class StudentDetailsPage implements OnInit {
       birthdayDate = this.form.value["birthday"];
     }
 
-    const newStudent = {
-      id: this.student && this.student.id ? this.student.id : undefined,
+    const studentDb = {
+      id: this.studentId ? this.studentId : undefined,
       firstName: this.form.value["firstName"],
       contact1: this.form.value["contact1"],
       lastName: this.form.value["lastName"],
@@ -114,17 +112,23 @@ export class StudentDetailsPage implements OnInit {
       imageProfile: this.imageProfile
     };
 
-    this.studentService.saveStudent(newStudent).subscribe((student) => {
-      // save image at the store
-      this.studentService
-        .uploadProfileImage(student, this.imageProfile)
-        .subscribe(() => {
-          this.messageController.createNessage(
-            "Aluno salvo com sucesso",
-            "/student"
+    this.studentService
+      .saveStudent(studentDb)
+      .pipe(
+        last(),
+        switchMap(student => {
+          return this.studentService.uploadProfileImage(
+            student,
+            this.imageProfile
           );
-        });
-    });
+        })
+      )
+      .subscribe(() => {
+        this.messageController.createNessage(
+          "Aluno salvo com sucesso",
+          "/student"
+        );
+      });
   }
 
   onDeleteStudent() {}

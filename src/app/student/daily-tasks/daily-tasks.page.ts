@@ -1,9 +1,10 @@
-import { ModalController } from '@ionic/angular';
-import { AuthService } from './../../auth/auth.service';
-import { StudentService } from "../student.service";
-import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
-import { Observable } from 'rxjs';
+import { ModalController } from "@ionic/angular";
+import { Observable } from "rxjs";
+import { StudentService } from "../student.service";
+import { AuthService } from "./../../auth/auth.service";
+import { Student } from "./../student.model";
+import { FilterModalPage } from "./filter-modal/filter-modal.page";
 
 @Component({
   selector: "app-daily-tasks",
@@ -21,7 +22,7 @@ export class DailyTasksPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.students$  = this.studentService.getStudents();
+    this.students$ = this.studentService.getStudents();
     this.userPhoto$ = this.authService.getUserPhotoUrl();
   }
 
@@ -30,6 +31,16 @@ export class DailyTasksPage implements OnInit {
   }
 
   onShowDailyFilterModal() {
-
+    this.modalController
+      .create({
+        component: FilterModalPage
+      })
+      .then(modalElement => {
+        modalElement.present();
+        return modalElement.onDidDismiss();
+      })
+      .then(modalResult => {
+        console.log(modalResult);
+      });
   }
 }

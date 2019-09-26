@@ -1,12 +1,12 @@
 import { AuthService } from "./../../auth/auth.service";
 import { PhotoModalPage } from "./photo-modal/photo-modal.page";
 import { StudentService } from "./../student.service";
-import { Student } from "./../student.model";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { Observable } from "rxjs";
-import { PhotosService } from './photos.service';
+import { PhotosService } from "./photos.service";
+import { last, map, concatMap, first, take } from "rxjs/operators";
 
 @Component({
   selector: "app-photos",
@@ -14,8 +14,7 @@ import { PhotosService } from './photos.service';
   styleUrls: ["./photos.page.scss"]
 })
 export class PhotosPage implements OnInit {
-  students: Student[] = [];
-
+  students$: Observable<any>;
   userPhoto$: Observable<string>;
 
   sliderConfig = {
@@ -36,25 +35,31 @@ export class PhotosPage implements OnInit {
     private photoService: PhotosService
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     const studentId = this.activateRouter.snapshot.paramMap.get("studentId");
 
     if (studentId) {
-      await this.studentService
-        .getStudentById(studentId)
-        .subscribe(student => this.students.push(student));
+      this.students$ = this.studentService.getStudentById(studentId).pipe(
+        map(student => {
+          student.photo = this.photoService.getPhotosByStudent(student.id);
+          return [student];
+        }),
+        last()
+      );
     } else {
-      await this.studentService
-        .getStudents()
-        .subscribe(students => this.students = students);
-    }
+      this.students$ = this.studentService.getStudents().pipe(
+        map(students => {
+          const studentsMap = [];
 
-    if (this.students) {
-      this.students.forEach(student => {
-        this.photoService.getPhotosByStudent(student.id).subscribe( photo => {
-          student.photo = photo;
-        } );
-      });
+          students.forEach(student => {
+            student.photo = this.photoService.getPhotosByStudent(student.id);
+            studentsMap.push(student);
+          });
+
+          return studentsMap;
+        }),
+        last()
+      );
     }
 
     this.userPhoto$ = this.authService.getUserPhotoUrl();

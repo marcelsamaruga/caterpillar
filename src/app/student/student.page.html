@@ -35,13 +35,14 @@
     <ion-item-sliding
       size-xs="8"
       offset-xs="2"
-      *ngFor="let student of students"
+      *ngFor="let student of students$ | async"
     >
       <ion-item>
-        <ion-avatar slot="start" item-start *ngIf="student.imageProfile | async as imageAvatar">
-          <ion-img
-            [src]="imageAvatar"
-          ></ion-img>
+        <ion-avatar slot="start" item-start *ngIf="student.imageProfile">
+          <ion-img [src]="student.imageProfile"></ion-img>
+        </ion-avatar>
+        <ion-avatar slot="start" item-start *ngIf="!student.imageProfile">
+          <ion-img src="../../../assets/img/image-not-found.png"></ion-img>
         </ion-avatar>
         <ion-label
           [routerLink]="['/', 'student', 'student-details', student.id]"
@@ -51,17 +52,18 @@
         </ion-label>
       </ion-item>
       <ion-item-options side="end">
-        <button ion-button color="primary">
-          <ion-icon
-            name="calendar"
-            [routerLink]="[
-              '/',
-              'student',
-              'daily-tasks-detail',
-              student.id,
-              getToday()
-            ]"
-          ></ion-icon>
+        <button
+          ion-button
+          color="primary"
+          [routerLink]="[
+            '/',
+            'student',
+            'daily-tasks-detail',
+            student.id,
+            getToday()
+          ]"
+        >
+          <ion-icon name="calendar"></ion-icon>
           Hoje
         </button>
       </ion-item-options>

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Photo } from './photos/photo.model';
 import { Task } from './daily-tasks/model/tasks.model';
 
@@ -12,6 +13,6 @@ export class Student {
     public birthday?: Date,
     public contact2?: string,
     public tasks?: Task[],
-    public photo?: Photo[]
+    public photo?: Observable<Photo[]>
   ) {}
 }

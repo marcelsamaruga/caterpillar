@@ -1,9 +1,8 @@
-import { AuthService } from './../auth/auth.service';
+import { AuthService } from "./../auth/auth.service";
 import { StudentService } from "./student.service";
 import { Component, OnInit } from "@angular/core";
 import { Student } from "./student.model";
-import { Router } from "@angular/router";
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-student",
@@ -11,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ["./student.page.scss"]
 })
 export class StudentPage implements OnInit {
-  students: Student[] = [];
+  students$: Observable<Student[]>;
   userPhoto$: Observable<string>;
   isLoading = false;
 
@@ -26,17 +25,8 @@ export class StudentPage implements OnInit {
 
   ionViewDidEnter() {
     this.isLoading = true;
-    this.studentService
-      .getStudents()
-      .subscribe(students => {
-
-        students.forEach(student => {
-          student.imageProfile = this.studentService.getProfileImage(student.id);
-        });
-
-        this.students = students;
-        this.isLoading = false;
-      });
+    this.students$ = this.studentService.getStudents();
+    this.students$.subscribe(() => this.isLoading = false);
   }
 
   getToday(): string {
