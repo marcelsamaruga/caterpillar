@@ -2,40 +2,46 @@
   <ion-toolbar>
     <ion-title>Buscar por</ion-title>
     <ion-buttons slot="end">
-      <ion-button onclick="dismissModal()">Close</ion-button>
+      <ion-button onclick="cancelModal()">Fechar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid>
-    
-      <ion-row>
-          <ion-col size-xs="10" offset-xs="1">
-            <ion-item>
-              <ion-label position="floating">Sobrenome</ion-label>
-              <ion-input
-                type="text"
-                [(ngModel)]="nameFilter"
-                name="lastName"
-              ></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-  
-        <ion-row>
-          <ion-col size-xs="10" offset-xs="1">
-            <ion-item>
-              <ion-label>Nascido em</ion-label>
-              <ion-datetime
-                display-format="DD/MM/YYYY"
-                picker-format="DD MM YYYY"
-                name="birthday"
-                [(ngModel)]="dateFilter"
-              ></ion-datetime>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-  
+    <ion-row>
+      <ion-col size-xs="10" offset-xs="1">
+        <ion-item>
+          <ion-label position="floating">Aluno</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="nameFilter"
+            name="nameFilter"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-xs="10" offset-xs="1">
+        <ion-item>
+          <ion-label>Dia da escola</ion-label>
+          <ion-datetime
+            display-format="DD/MM/YYYY"
+            picker-format="DD MM YYYY"
+            name="dateFilter"
+            [(ngModel)]="dateFilter"
+          ></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button color="primary" (click)="dismissModal()"
+          >Filtrar</ion-button
+        >
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

@@ -6,19 +6,22 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./filter-modal.page.html",
   styleUrls: ["./filter-modal.page.scss"]
 })
-export class FilterModalPage implements OnInit {
+export class FilterModalPage {
   dateFilter: string;
   nameFilter: string;
 
   constructor(private modalController: ModalController) {}
 
-  ngOnInit() {}
-
   dismissModal() {
-    this.modalController.dismiss({
+    const data = {
       dateFilter: this.dateFilter,
       nameFilter: this.nameFilter
-    },
-    "confirm");
+    };
+
+    this.modalController.dismiss(data, "confirm");
+  }
+
+  cancelModal() {
+    this.modalController.dismiss({}, "cancel");
   }
 }
