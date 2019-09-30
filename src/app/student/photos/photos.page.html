@@ -21,6 +21,13 @@
 </ion-header>
 
 <ion-content fullscreen>
+  <ion-spinner
+    name="crescent"
+    color="primary"
+    *ngIf="isLoading"
+    class="spinnerCenter"
+  ></ion-spinner>
+
   <div *ngFor="let student of students$ | async">
     <ion-item color="primary" text-center>
       <ion-label>

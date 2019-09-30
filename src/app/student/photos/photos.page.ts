@@ -16,6 +16,7 @@ import { last, map, concatMap, first, take } from "rxjs/operators";
 export class PhotosPage implements OnInit {
   students$: Observable<any>;
   userPhoto$: Observable<string>;
+  isLoading = false;
 
   sliderConfig = {
     slidesPerView: 1.3,
@@ -36,6 +37,8 @@ export class PhotosPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
+
     const studentId = this.activateRouter.snapshot.paramMap.get("studentId");
 
     if (studentId) {
@@ -63,6 +66,8 @@ export class PhotosPage implements OnInit {
     }
 
     this.userPhoto$ = this.authService.getUserPhotoUrl();
+
+    this.students$.subscribe(() => (this.isLoading = false));
   }
 
   onOpenGallery(image: string) {

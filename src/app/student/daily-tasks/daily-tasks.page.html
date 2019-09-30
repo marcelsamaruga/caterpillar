@@ -25,6 +25,9 @@
 </ion-header>
 
 <ion-content>
+  <h3 text-center>
+      {{ taskDate | date }}
+  </h3>
   <ion-list size-xs="8" offset-xs="2">
     <ion-item-sliding *ngFor="let student of students$ | async">
       <ion-item>
@@ -41,17 +44,10 @@
             'student',
             'daily-tasks-detail',
             student.id,
-            getToday()
+            taskDate
           ]"
         >
           <h2>{{ student.firstName + " " + student.lastName }}</h2>
-          <p>{{ getToday() | date }}</p>
-
-          <ion-item *ngFor="let task of student.tasks">
-            <ion-label>
-              {{ task.date | date }}
-            </ion-label>
-          </ion-item>
         </ion-label>
       </ion-item>
 

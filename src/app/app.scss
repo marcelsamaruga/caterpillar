@@ -1,16 +1,21 @@
 // App Styles
 // ----------------------------------------------------------------------------
-// Put style rules here that you want to apply to the entire application. These 
-// styles are for the entire app and not just one component. Additionally, this 
-// file can hold Sass mixins, functions, and placeholder classes to be imported 
+// Put style rules here that you want to apply to the entire application. These
+// styles are for the entire app and not just one component. Additionally, this
+// file can hold Sass mixins, functions, and placeholder classes to be imported
 // and used throughout the application.
 
 .menu-background {
-    margin-right: -15px;
+  margin-right: -15px;
 }
 
 .avatar_profile {
-    height:45px;
-    width:45px;
-    margin-right:15px;
+  height: 45px;
+  width: 45px;
+  margin-right: 15px;
+}
+
+.spinnerCenter {
+  display: block;
+  margin: auto;
 }

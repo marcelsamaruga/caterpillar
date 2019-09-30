@@ -14,6 +14,7 @@ import { FilterModalPage } from "./filter-modal/filter-modal.page";
 export class DailyTasksPage implements OnInit {
   students$: Observable<Student[]>;
   userPhoto$: Observable<string>;
+  taskDate: string = new Date().toISOString().substring(0, 10);
 
   constructor(
     private studentService: StudentService,
@@ -40,7 +41,19 @@ export class DailyTasksPage implements OnInit {
         return modalElement.onDidDismiss();
       })
       .then(modalResult => {
-        console.log(modalResult);
+        if (modalResult && modalResult.data && modalResult.role === "confirm") {
+          const dateFilter = modalResult.data.dateFilter;
+          const nameFilter = modalResult.data.nameFilter;
+
+          if (dateFilter) {
+            this.taskDate = dateFilter.substring(0, 10);
+          }
+
+          if (nameFilter) {
+            this.students$ = null;
+            this.students$ = this.studentService.getStudentByName(nameFilter);
+          }
+        }
       });
   }
 }
