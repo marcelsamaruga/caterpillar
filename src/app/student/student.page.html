@@ -38,11 +38,12 @@
       *ngFor="let student of students$ | async"
     >
       <ion-item>
-        <ion-avatar slot="start" item-start *ngIf="student.imageProfile">
-          <ion-img [src]="student.imageProfile"></ion-img>
-        </ion-avatar>
-        <ion-avatar slot="start" item-start *ngIf="!student.imageProfile">
-          <ion-img src="../../../assets/img/image-not-found.png"></ion-img>
+        <ion-avatar slot="start" item-start *ngIf="student.imageProfile | async as imageAvatar">
+          <ion-img
+            [src]="imageAvatar"
+            [src]="student.imageProfile"
+            *ngIf="student.imageProfile"
+          ></ion-img>
         </ion-avatar>
         <ion-label
           [routerLink]="['/', 'student', 'student-details', student.id]"
@@ -81,7 +82,6 @@
   </ion-list>
 
   <ion-button
-    class="class-ion-button"
     [routerLink]="['/', 'student', 'student-details', 'new']"
     size="default"
   >
