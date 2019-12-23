@@ -1,27 +1,33 @@
 <ion-list>
-    <ion-radio-group>
-      <ion-list-header>
-        <ion-label>Hoje eu fui</ion-label>
-      </ion-list-header>
-  
-      <ion-item>
-        <ion-label>Passeio no pátio</ion-label>
-        <ion-radio slot="start" value="biff" checked></ion-radio>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Na balança</ion-label>
-        <ion-radio slot="start" value="griff"></ion-radio>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>No solzinho</ion-label>
-        <ion-radio slot="start" value="buford"></ion-radio>
-      </ion-item>
+  <ion-list-header>
+    <ion-label>Hoje eu fui</ion-label>
+  </ion-list-header>
 
-      <ion-item>
-        <ion-label>No gym</ion-label>
-        <ion-radio slot="start" value="restAlone"></ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
+  <ion-item>
+    <ion-label>Passeio no pátio</ion-label>
+    <ion-checkbox
+      slot="start"
+      [value]="courtyard"
+      [checked]="activity.courtyard"
+    ></ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Na balança</ion-label>
+    <ion-checkbox slot="start" [value]="swing" [checked]="activity.swing"></ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>No solzinho</ion-label>
+    <ion-checkbox slot="start" [value]="sunbath" [checked]="activity.sunbath"></ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>No gym</ion-label>
+    <ion-checkbox slot="start" [value]="gym" [checked]="activity.gym"></ion-checkbox>
+  </ion-item>
+</ion-list>
+
+<ion-button type="button" (click)="onSaveActivity()">
+  Salvar
+</ion-button>

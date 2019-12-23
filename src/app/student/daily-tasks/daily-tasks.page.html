@@ -25,9 +25,13 @@
 </ion-header>
 
 <ion-content>
-  <h3 text-center>
+  <ion-item>
+    <ion-label>
+        <ion-icon name="calendar" class="task-calendar"></ion-icon>
       {{ taskDate | date }}
-  </h3>
+    </ion-label>
+  </ion-item>
+
   <ion-list size-xs="8" offset-xs="2">
     <ion-item-sliding *ngFor="let student of students$ | async">
       <ion-item>

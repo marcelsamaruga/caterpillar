@@ -46,7 +46,7 @@ export class DailyTasksService implements OnInit {
   }
 
   getAllTasks() {
-    this.tasks.push(
+    /*this.tasks.push(
       new Task(
         "1",
         new Date(),
@@ -65,6 +65,6 @@ export class DailyTasksService implements OnInit {
           new Meal( "4", MealType.Soup, FoodQuantity.Good )
          ]
       )
-    );
+    );*/
   }
 }

@@ -4,11 +4,18 @@
         font-size: 1.3rem;
     }
     margin-top: 40px;
+    background-color: #87EFAD;
+    color: black;
+    border-radius: 15px 50px 30px; 
+    border: 2px solid #CCC;
+    width: 90%;
+    margin:auto;
+    margin-top:25px;
+    
 }
  
 .class-ion-content {
-    --background: rgba(67, 62, 68, 0.455);
-    
+    --background: #F3FFFA;
 }
  
 .class-ion-slides {

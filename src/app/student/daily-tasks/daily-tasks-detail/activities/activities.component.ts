@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Activity } from '../../model/activity.model';
 
 @Component({
   selector: 'app-activities',
@@ -7,8 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActivitiesComponent implements OnInit {
 
-  constructor() { }
+  activity: Activity = {};
+  courtyard;
+  swing;
+  gym;
+  sunbath;
 
-  ngOnInit() {}
+
+  ngOnInit() {
+    this.activity.courtyard = true;
+  }
+
+  onSaveActivity() {
+    console.log(this.courtyard);
+    console.log(this.gym);
+    console.log(this.activity);
+  }
 
 }

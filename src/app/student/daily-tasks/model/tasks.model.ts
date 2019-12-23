@@ -1,16 +1,16 @@
 import { Student } from "../../student.model";
+import { Activity } from "../model/activity.model";
 import { DiaperChange } from "../model/diaper-change.model";
 import { BreastFeed } from './breastfeed.model';
 import { Meal } from './meal.model';
-export class Task {
-  constructor(
-    public id: string,
-    public date: Date = new Date(),
-    public student: Student,
-    public diaperChange: DiaperChange[] = [],
-    public breastFeed: BreastFeed[] = [],
-    public sunBath: boolean = false,
-    public gym: boolean = false,
-    public meal: Meal[]
-  ) {}
+export interface Task {
+    id: string;
+    date: Date;
+    student: Student;
+    diaperChange: DiaperChange[];
+    breastFeed: BreastFeed[];
+    sunBath: boolean;
+    gym: boolean;
+    meal: Meal[];
+    activity: Activity[];
 }
