@@ -11,4 +11,8 @@ export class DiapersComponent implements OnInit {
 
   ngOnInit() {}
 
+  saveDiapers() {
+    
+  }
+
 }

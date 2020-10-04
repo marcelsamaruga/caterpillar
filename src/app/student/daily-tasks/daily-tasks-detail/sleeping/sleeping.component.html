@@ -3,16 +3,41 @@
         <ion-label>Hoje eu dormi das:</ion-label>
       </ion-list-header>
   
-      <ion-item>
-        <ion-datetime
-        displayFormat="hh:mm"
-        pickerFormat="hh:mm"
-        ></ion-datetime>
-        <ion-label>às</ion-label>
-        <ion-datetime
-        displayFormat="hh:mm"
-        pickerFormat="hh:mm"
-      ></ion-datetime>
-      </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-xs="4">
+            <ion-item>
+              <ion-datetime
+              displayFormat="HH:mm"
+              pickerFormat="HH:mm"
+              ></ion-datetime>
+            </ion-item>
+          </ion-col>
+         
+          <ion-col size-xs="3">
+            <ion-item>
+              <ion-label>às</ion-label>
+              </ion-item>
+          </ion-col>
+
+          <ion-col size-xs="4">
+            <ion-item>
+              <ion-datetime
+              displayFormat="HH:mm"
+              pickerFormat="HH:mm"
+              ></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
   
   </ion-list>
+
+<ion-button
+  ion-button
+  color="primary"
+  (click)='saveSleeping()'
+>
+  Salvar
+</ion-button>

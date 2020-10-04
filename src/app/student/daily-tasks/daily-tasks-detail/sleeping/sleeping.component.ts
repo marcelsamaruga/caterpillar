@@ -11,4 +11,8 @@ export class SleepingComponent implements OnInit {
 
   ngOnInit() {}
 
+  saveSleeping() {
+    console.log('save');
+  }
+
 }

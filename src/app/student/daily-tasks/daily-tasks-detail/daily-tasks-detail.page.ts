@@ -72,4 +72,11 @@ export class DailyTasksDetailPage implements OnInit {
     this.showDiapers  = event.detail.value === 'diapers';
     this.showActivity = event.detail.value === 'activity';
   }
+
+  private ngShowScreen(showMeal: boolean, showSleeping: boolean, showDiapers: boolean, showActivity: boolean) {
+    this.showMeals = showMeal;
+    this.showSleeping = showSleeping;
+    this.showDiapers = showDiapers;
+    this.showActivity = showActivity;
+  }
 }

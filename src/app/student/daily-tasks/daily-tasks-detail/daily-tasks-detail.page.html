@@ -64,13 +64,10 @@
         </ion-col>
       </ion-row>
 
-      <div *ngIf="task && task.meal && showMeals">
-        <ion-row *ngFor="let meal of task.meal" class="meal_row">
+      <div *ngIf="showMeals">
           <ion-col size-xs="12">
-            <app-meals [title]="meal.mealType"></app-meals>
+            <app-meals></app-meals>
           </ion-col>
-          <hr />
-        </ion-row>
       </div>
 
       <ion-row *ngIf="showSleeping">
@@ -95,19 +92,19 @@
 
     <ion-fab vertical="top" horizontal="end" edge slot="fixed" class="class-ion-fab">
       <ion-fab-button>
-        <ion-icon name="add"></ion-icon>
+        <ion-icon name="arrow-down"></ion-icon>
       </ion-fab-button>
       <ion-fab-list>
-        <ion-fab-button color="secondary">
+        <ion-fab-button color="secondary" (click)="ngShowScreen(true, false, false, false)">
           <ion-icon name="restaurant"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="secondary">
+        <ion-fab-button color="secondary" (click)="ngShowScreen(false, false, true, false)">
           <ion-icon name="body"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="secondary">
+        <ion-fab-button color="secondary" (click)="ngShowScreen(false, true, false, false)">
           <ion-icon name="bed"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="secondary">
+        <ion-fab-button color="secondary" (click)="ngShowScreen(false, false, false, true)">
           <ion-icon name="tennisball"></ion-icon>
         </ion-fab-button>
       </ion-fab-list>

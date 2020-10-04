@@ -12,4 +12,8 @@ export class MealsComponent {
 
   constructor() { }
 
+  onSaveMeal() {
+    
+  }
+
 }
